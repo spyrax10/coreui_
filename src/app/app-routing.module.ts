@@ -5,6 +5,8 @@ import { DefaultLayoutComponent } from './containers';
 import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
+import { Login2Component } from './views/pages/login_2/login2.component';
+import { Login3Component } from './views/pages/login_3/login3.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 
 const routes: Routes = [
@@ -91,6 +93,20 @@ const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login Page'
+    }
+  },
+  {
+    path: 'login_2',
+    component: Login2Component,
+    data: {
+      title: 'Login Page 2'
+    }
+  },
+  {
+    path: 'login_3',
+    component: Login3Component,
+    data: {
+      title: 'Login Page 3'
     }
   },
   {

@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { Page404Component } from './page404/page404.component';
 import { Page500Component } from './page500/page500.component';
 import { LoginComponent } from './login/login.component';
+import { Login2Component } from './login_2/login2.component';
+import { Login3Component } from './login_3/login3.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
@@ -25,6 +27,20 @@ const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login Page'
+    }
+  },
+  {
+    path: 'login_2',
+    component: Login2Component,
+    data: {
+      title: 'Login Page 2'
+    }
+  },
+  {
+    path: 'login_3',
+    component: Login3Component,
+    data: {
+      title: 'Login Page 3'
     }
   },
   {

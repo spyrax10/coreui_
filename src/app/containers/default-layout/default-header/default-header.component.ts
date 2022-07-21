@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, NgModule } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+// import { ModalModule } from '../../../../app/views/notifications/modals/modals.component';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
+
 
 @Component({
   selector: 'app-default-header',
