@@ -3,10 +3,16 @@
     <c-row class="justify-content-center">
       <c-col md="8">
         <c-card-group>
-          <c-card class="p-4">
+          <c-card class="p-8">
             <c-card-body>
               <form cForm>
-                <h1>Login</h1>
+                
+                <!-- <h1>Login</h1> -->
+
+                <c-row class="text-center mt-0">
+                  <img cImg height="130" src="../../../../assets/logo/sample_POS_logo.png"/>
+                </c-row>
+
                 <p class="text-medium-emphasis">Sign In to your account</p>
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
@@ -25,32 +31,85 @@
                     type="password"
                   />
                 </c-input-group>
+                
                 <c-row>
-                  <c-col xs="6">
+
+                  <c-col class="mt-2" xs="8">
+                    <c-form-check>
+                      <input [checked]="true" cFormCheckInput id="checkOne" type="checkbox" />
+                      <label cFormCheckLabel for="checkOne">Remember Me</label>
+                    </c-form-check>
+                  </c-col>
+
+                  <c-col xs="4">
                     <button cButton class="px-4" color="primary" routerLink="/dashboard">
                       Login
                     </button>
                   </c-col>
-                  <c-col class="text-right" xs="6">
+
+                </c-row>
+
+                <!-- <c-row class="mt-2">
+                  <p class="text-center">- OR -</p>
+                </c-row>
+
+                <div class="d-grid gap-2">
+                  <button  cButton color="primary"> 
+                    <svg cIcon class="me-2" name="cibFacebook"></svg> 
+                    Sign in using Facebook 
+                  </button>
+                  
+                  <button cButton color="danger"> 
+                    <svg cIcon class="me-2" name="cibGoogle"></svg> 
+                    Sign in using Google 
+                  </button>
+                </div> -->
+               
+                <hr cDropdownDivider/>
+
+                <c-row>
+                  <c-col class="text-left" xs="6">
                     <button cButton class="px-0" color="link">
                       Forgot password?
                     </button>
                   </c-col>
                 </c-row>
+                  
+                <c-row>
+                  <c-col class="text-left" xs="12">
+                    <button cButton class="px-0" color="link">
+                      Create a New Account
+                    </button>
+                  </c-col>
+                </c-row>
+
               </form>
             </c-card-body>
           </c-card>
-          <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
+
+          <c-card [ngStyle]="{'width.%': 44}" 
+            style="
+              background-image: url('./../../../assets/logo/POS_Login_Back.jpg'); 
+              background-size: cover; 
+              background-position: center; 
+            " 
+            class="text-white bg-primary py-5"
+          >
             <c-card-body class="text-center">
               <div>
-                <h2>Sign up</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
-                  Register Now!
-                </button>
+                 <!-- Login Page Demo -->
+                 <!-- <hr cDropdownDivider/>
+                
+                 <c-row>
+                   <c-col xs="6">
+                     <a class="text-white" routerLink="/login_2">Login Page Demo 2</a>
+                   </c-col>
+ 
+                   <c-col xs="6">
+                     <a class="text-white" routerLink="/login_3">Login Page Demo 3</a>
+                   </c-col>
+                 </c-row> -->
+                 <!-- End of Login Page Demo -->
               </div>
             </c-card-body>
           </c-card>
