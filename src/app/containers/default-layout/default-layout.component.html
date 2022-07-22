@@ -1,38 +1,35 @@
 <!--sidebar-->
-<c-sidebar
-  #sidebar="cSidebar"
+<c-sidebar #sidebar="cSidebar"
   class="d-print-none sidebar sidebar-fixed"
   id="sidebar"
   visible
 >
-  <c-sidebar-brand
+  <c-sidebar-brand 
     [brandFull]="{
-      src: 'assets/img/brand/coreui-angular.svg',
+      src: 'assets/logo/pos_logo.png',
       width: 200,
-      height: 46,
+      height: 60,
       alt: 'CoreUI Logo'
     }"
     [brandNarrow]="{
-      src: 'assets/img/brand/coreui-signet-white.svg',
+      src: 'assets/logo/csi_icon.png',
       width: 46,
       height: 46,
-      alt: 'CoreUI Logo'
+      alt: 'CSI Logo'
     }"
-    routerLink="./"
+    routerLink="/dashboard"
   >
   </c-sidebar-brand>
-    <perfect-scrollbar [config]="perfectScrollbarConfig">
-  <!--  [perfectScrollbar]="perfectScrollbarConfig"-->
-  <c-sidebar-nav
-    [navItems]="navItems"
-  >
-  </c-sidebar-nav>
-    </perfect-scrollbar>
-  <c-sidebar-toggler
-    *ngIf="!sidebar.narrow"
-    toggle="unfoldable"
-    cSidebarToggle="sidebar"
-  ></c-sidebar-toggler>
+
+  <perfect-scrollbar [config]="perfectScrollbarConfig">
+    <!--  [perfectScrollbar]="perfectScrollbarConfig"-->
+    <c-sidebar-nav [navItems]="navItems"> </c-sidebar-nav>
+  </perfect-scrollbar>
+
+  <c-sidebar-toggler *ngIf="!sidebar.narrow"
+    toggle="unfoldable" cSidebarToggle="sidebar">
+  </c-sidebar-toggler>
+
 </c-sidebar>
 
 <!--main-->
