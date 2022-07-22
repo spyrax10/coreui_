@@ -77,11 +77,45 @@ export const navItems: INavData[] = [
 
   {
     name: 'Purchases',
-    iconComponent: { name: 'cil-basket' }
+    iconComponent: { name: 'cil-basket' },
+    children : [
+      {
+        name: 'WOF (Weekly Order Form)'
+      },
+      {
+        name: 'Consolidated  Delivery Summary Report'
+      },
+      {
+        name: 'Consolidated Purchase Summary Report'
+      },
+      {
+        name: 'Invoice Document'
+      },
+      {
+        name: 'Consolidated Finish Goods Summary Report'
+      },
+    ]
   },
   {
     name: 'Inventory',
-    iconComponent: { name: 'cil-chart' }
+    iconComponent: { name: 'cil-chart' },
+    children : [
+      {
+        name: 'Daily Inventory Movement Per Branch'
+      },
+      {
+        name: 'Inventory Count Per Day'
+      },
+      {
+        name: 'Consolidated Purchase Summary Report'
+      },
+      {
+        name: 'Inventory Variance Report Per Branch'
+      },
+      {
+        name: 'Consolidated Inventory Summary Report'
+      },
+    ]
   },
 
 ];
