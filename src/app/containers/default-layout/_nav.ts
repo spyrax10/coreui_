@@ -16,30 +16,30 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Sales',
-    url: '/theme/colors',
-    iconComponent: { name: 'cil-drop' }
+    url: '/icons/coreui-icons',
+    iconComponent: { name: 'cil-chart-line' }
   },
   {
     name: 'Purchases',
-    url: '/theme/typography',
-    linkProps: { fragment: 'someAnchor' },
-    iconComponent: { name: 'cil-pencil' }
+    url: '/icons/flags',
+    iconComponent: { name: 'cil-basket' }
   },
+
   {
     name: 'Inventory',
-    url: '/theme/typography',
-    linkProps: { fragment: 'someAnchor' },
-    iconComponent: { name: 'cil-pencil' }
+    url: '/icons/brands',
+    iconComponent: { name: 'cil-chart' }
   },
+
+  //Reports Section
   {
     title: true,
     name: 'Reports'
   },
-
   {
     name: 'Sales',
     url: '/base',
-    iconComponent: { name: 'cil-puzzle' },
+    iconComponent: { name: 'cil-chart-line' },
     children : [
       {
         name: 'Daily Sales Report'
@@ -77,12 +77,11 @@ export const navItems: INavData[] = [
 
   {
     name: 'Purchases',
-    iconComponent: { name: 'cil-puzzle' }
+    iconComponent: { name: 'cil-basket' }
   },
   {
     name: 'Inventory',
-    iconComponent: { name: 'cil-cursor' }
-  }
-
+    iconComponent: { name: 'cil-chart' }
+  },
 
 ];
