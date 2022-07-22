@@ -1,46 +1,98 @@
 <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
   <c-container>
     <c-row class="justify-content-center">
-      <c-col lg="7" md="9" xl="6">
-        <c-card class="mx-4">
-          
-          <c-card-body class="p-4">
+      <c-col md="8">
+        <c-card-group>
 
-            <!-- Register Form -->
-            <form cForm>
-              <h1>Register</h1>
-              <p class="text-medium-emphasis">Create your account</p>
-              <c-input-group class="mb-3">
-                <span cInputGroupText>
-                  <svg cIcon name="cilUser"></svg>
-                </span>
-                <input autoComplete="name" cFormControl placeholder="Username" />
-              </c-input-group>
-              <c-input-group class="mb-3">
-                <span cInputGroupText>@</span>
-                <input autoComplete="email" cFormControl placeholder="Email" />
-              </c-input-group>
-              <c-input-group class="mb-3">
-                <span cInputGroupText>
-                  <svg cIcon name="cilLockLocked"></svg>
-                </span>
-                <input autoComplete="new-password" cFormControl placeholder="Password" type="password" />
-              </c-input-group>
-              <c-input-group class="mb-4">
-                <span cInputGroupText>
-                  <svg cIcon name="cilLockLocked"></svg>
-                </span>
-                <input autoComplete="new-password" cFormControl placeholder="Repeat password" type="password" />
-              </c-input-group>
-              <div class="d-grid">
-                <button cButton color="success">Create Account</button>
+          <c-card [ngStyle]="{'width.%': 40}" 
+            style="
+              background-image: url('./../../../assets/logo/POS_Login_Back.jpg'); 
+              background-size: cover; 
+              background-position: center; 
+            " 
+            class="text-white bg-primary py-5"
+          >
+            <c-card-body class="text-center">
+              <div>
+              
               </div>
-            </form>
-            <!-- End of Register Form -->
+            </c-card-body>
 
-          </c-card-body>
+          </c-card>
+
+
+          <c-card class="p-8">
+            <c-card-body>
+              <form cForm>
+                
+                <c-row class="text-center mt-0">
+                  <img cImg height="80" src="../../../../assets/logo/pos_logo.png" alt=""/>
+                </c-row>
           
-        </c-card>
+                <c-row class="mt-3">
+                  <p class="text-medium-emphasis">Register for New Account</p>
+                </c-row>
+          
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input autoComplete="username" cFormControl placeholder="Username" />
+                </c-input-group>
+
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>@</span>
+                  <input autoComplete="email" cFormControl placeholder="Email" />
+                </c-input-group>
+
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input
+                    autoComplete="current-password"
+                    cFormControl
+                    placeholder="Password"
+                    type="password"
+                  />
+                </c-input-group>
+
+                <c-input-group class="mb-4">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input
+                    autoComplete="current-password"
+                    cFormControl
+                    placeholder="Re-Type Password"
+                    type="password"
+                  />
+                </c-input-group>
+                
+                <c-row>
+
+                  <c-col xs="8">
+                    
+                    <button type="submit" cButton class="px-3" color="dark" variant="outline" routerLink="/login">
+                      <svg cIcon class="me-2" name="cilAccountLogout"></svg>
+                      Back to Login
+                    </button>
+                  </c-col>
+
+                  <c-col xs="4">
+                    <button type="submit" cButton class="px-3" color="primary" variant="outline" routerLink="/login">
+                      Register
+                    </button>
+                  </c-col>
+
+                </c-row>
+               
+
+              </form>
+            </c-card-body>
+          </c-card>
+
+        </c-card-group>
       </c-col>
     </c-row>
   </c-container>
