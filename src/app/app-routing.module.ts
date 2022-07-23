@@ -39,6 +39,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/purchases/purchases.module').then((m) => m.PurchasesModule)
       },
+      {
+        path: 'inventory',
+        loadChildren: () =>
+          import('./views/inventory/inventory.module').then((m) => m.InventoryModule)
+      },
       //
       {
         path: 'theme',
