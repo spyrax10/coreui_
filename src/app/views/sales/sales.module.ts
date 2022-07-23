@@ -22,6 +22,8 @@ import { SalesComponent } from './sales.component';
 
 import { WidgetsModule } from '../widgets/widgets.module';
 
+import { DropdownModule } from '@coreui/angular';
+
 @NgModule({
   imports: [
     SalesRoutingModule,
@@ -40,7 +42,8 @@ import { WidgetsModule } from '../widgets/widgets.module';
     ChartjsModule,
     AvatarModule,
     TableModule,
-    WidgetsModule
+    WidgetsModule,
+    DropdownModule
   ],
   declarations: [SalesComponent]
 })
