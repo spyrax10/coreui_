@@ -11,11 +11,11 @@ export const navItems: INavData[] = [
     url: '/sales',
     iconComponent: { name: 'cil-chart-line' }
   },
-  // {
-  //   name: 'Purchases',
-  //   url: '/purchases',
-  //   iconComponent: { name: 'cil-basket' }
-  // },
+  {
+    name: 'Purchases',
+    url: '/purchases',
+    iconComponent: { name: 'cil-basket' }
+  },
 
   // {
   //   name: 'Inventory',

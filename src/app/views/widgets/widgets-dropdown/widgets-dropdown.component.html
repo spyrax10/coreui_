@@ -1,6 +1,6 @@
 <c-row>
   
-  <!-- Users Col Widget -->
+  <!-- Sales Col Widget -->
   <c-col sm="6" xl="4">
     <c-widget-stat-a class="mb-4" color="dark" title="Sales Widget">
       <ng-template cTemplateId="widgetValueTemplate" ngPreserveWhitespaces>
@@ -33,9 +33,9 @@
 
     </c-widget-stat-a>
   </c-col>
-<!-- End Users Col Widget -->
+<!-- End Sales Col Widget -->
 
-<!-- Income Col Widget -->
+<!-- Purchases Col Widget -->
   <c-col sm="6" xl="4">
     <c-widget-stat-a [title]="'Puchases Widget'" class="mb-4" color="dark">
 
@@ -52,7 +52,7 @@
             <svg cIcon class="text-high-emphasis-inverse" name="cilOptions"></svg>
           </button>
           <ul cDropdownMenu>
-            <li><a routerLink="./" cDropdownItem>Go To Purchases Dashboard</a></li>
+            <li><a routerLink="/purchases" cDropdownItem>Go To Purchases Dashboard</a></li>
             <li><a routerLink="./" cDropdownItem>Go To Purchases Report</a></li>
           </ul>
         </c-dropdown>
@@ -63,9 +63,9 @@
       </ng-template>
     </c-widget-stat-a>
   </c-col>
-  <!-- End Income Col Widget -->
+  <!-- End Purchases Col Widget -->
 
-  <!-- Conversion Col Widget -->
+  <!-- Inventory Col Widget -->
   <c-col sm="6" xl="4">
     <c-widget-stat-a [title]="'Inventory Widget'" class="mb-4" color="dark">
       <ng-template cTemplateId="widgetValueTemplate" ngPreserveWhitespaces>
@@ -90,6 +90,6 @@
       </ng-template>
     </c-widget-stat-a>
   </c-col>
-<!--End Conversion Col Widget -->
+<!--End Inventory Col Widget -->
 
 </c-row>
