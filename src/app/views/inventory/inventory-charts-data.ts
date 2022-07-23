@@ -62,7 +62,26 @@ export class InventoryChartsData {
         'November',
         'December'
       ];
-    } else {
+    } 
+     //Testing Data
+     else if (period == 'Year') {
+      labels = [
+        '2010',
+        '2011',
+        '2012',
+        '2013',
+        '2014',
+        '2015',
+        '2016',
+        '2017',
+        '2018',
+        '2019',
+        '2020',
+        '2021',
+        '2022',
+      ]
+    }
+    else {
       /* tslint:disable:max-line-length */
       const week = [
         'Monday',
