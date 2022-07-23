@@ -8,18 +8,18 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Sales',
-    url: '/icons/coreui-icons',
+    url: '/sales',
     iconComponent: { name: 'cil-chart-line' }
   },
   {
     name: 'Purchases',
-    url: '/icons/flags',
+    url: '/purchases',
     iconComponent: { name: 'cil-basket' }
   },
 
   {
     name: 'Inventory',
-    url: '/icons/brands',
+    url: '/inventory',
     iconComponent: { name: 'cil-chart' }
   },
 
@@ -30,7 +30,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Sales',
-    url: '/base',
+    url: '/sales/reports',
     iconComponent: { name: 'cil-chart-line' },
     children : [
       {
@@ -69,6 +69,7 @@ export const navItems: INavData[] = [
 
   {
     name: 'Purchases',
+    url: '/purchases',
     iconComponent: { name: 'cil-basket' },
     children : [
       {
@@ -90,6 +91,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Inventory',
+    url: '/inventory',
     iconComponent: { name: 'cil-chart' },
     children : [
       {
