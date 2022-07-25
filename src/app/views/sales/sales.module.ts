@@ -24,6 +24,10 @@ import { WidgetsModule } from '../widgets/widgets.module';
 
 import { DropdownModule } from '@coreui/angular';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
   imports: [
     SalesRoutingModule,
@@ -43,7 +47,10 @@ import { DropdownModule } from '@coreui/angular';
     AvatarModule,
     TableModule,
     WidgetsModule,
-    DropdownModule
+    DropdownModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   declarations: [SalesComponent]
 })

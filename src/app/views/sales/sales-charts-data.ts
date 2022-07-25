@@ -81,14 +81,6 @@ export class SalesChartsData {
         '2022',
       ]
     }
-    else if (period == 'Brand') {
-      labels = [
-        'Honda',
-        'Kawasaki',
-        'Toyota',
-        'Panasonic'
-      ]
-    }
     else {
       /* tslint:disable:max-line-length */
       const week = [

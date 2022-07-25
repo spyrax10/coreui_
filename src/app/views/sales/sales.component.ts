@@ -16,7 +16,7 @@ export class SalesComponent implements OnInit {
   }
 
   public type: IType[] = [
-    {variation: 'Day'}, {variation: 'Month'}, {variation: 'Year'}, {variation: 'Brand'}
+    {variation: 'Day'}, {variation: 'Month'}, {variation: 'Year'}
   ]
   
   public mainChart: IChartProps = {};

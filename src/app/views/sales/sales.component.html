@@ -2,17 +2,17 @@
 <c-card class="mb-4">
   <c-card-body>
     <c-row>
-      <c-col sm="9">
+      <c-col sm="5">
         <h4 class="card-title mb-0" id="traffic">
           Sales Summary
         </h4>
-        <div class="small text-medium-emphasis">January - December 2021</div>
+        <!-- <div class="small text-medium-emphasis">January - December 2021</div> -->
       </c-col>
       
-      <c-col class="d-none d-md-block mt-2" sm="3">
+      <c-col class="d-none d-md-block" sm="7">
 
-        <c-dropdown variant="btn-group">
-          <button cButton color="secondary" variant="outline" size="sm">Select Summary Variation</button>
+        <c-dropdown class="float-end" variant="btn-group">
+          <button cButton color="secondary" variant="outline" size="sm">Select Filter Type</button>
           <button cButton cDropdownToggle color="secondary" variant="outline" size="sm" split></button>
           
           <ul cDropdownMenu>
@@ -29,15 +29,35 @@
         <!-- <button cButton class="float-end" color="primary">
           <svg cIcon name="cilCloudDownload"></svg>
         </button> -->
+      </c-col>
 
+    </c-row>
+    <c-row class="float-end">
+      <c-col>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker_1" placeholder="Date From:">
+          <mat-datepicker-toggle matSuffix [for]="picker_1"></mat-datepicker-toggle>
+          <mat-datepicker #picker_1></mat-datepicker>
+        </mat-form-field>
+      </c-col>
+
+      <c-col>
+        <mat-form-field >
+          <input matInput [matDatepicker]="picker_2" placeholder="Date To:">
+          <mat-datepicker-toggle matSuffix [for]="picker_2"></mat-datepicker-toggle>
+          <mat-datepicker #picker_2></mat-datepicker>
+        </mat-form-field>
       </c-col>
     </c-row>
+
     <c-chart [data]="mainChart.data"
              [height]="300"
-             [ngStyle]="{'marginTop.px': 40}"
+             [ngStyle]="{'marginTop.px': 55}"
              [options]="mainChart.options"
              [type]="mainChart.type">
       Main chart
     </c-chart>
-</c-card-body>
+  </c-card-body>
+
+</c-card>
   

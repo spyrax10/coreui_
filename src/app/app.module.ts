@@ -13,6 +13,9 @@ import {
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
 
+
+import { MaterialModule } from './material.module';
+
 // Import app component
 import { AppComponent } from './app.component';
 
@@ -85,6 +88,7 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
+    MaterialModule
   ],
   providers: [
     {

@@ -11,7 +11,7 @@ export class DefaultLayoutComponent {
   public navItems = navItems;
 
   public perfectScrollbarConfig = {
-    suppressScrollX: false,
+    suppressScrollX: true,
   };
 
   constructor() {}
