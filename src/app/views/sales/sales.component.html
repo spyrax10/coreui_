@@ -10,14 +10,19 @@
       </c-col>
       
       <c-col class="d-none d-md-block mt-2" sm="3">
-        
+
         <c-dropdown variant="btn-group">
           <button cButton color="secondary" variant="outline" size="sm">Select Summary Variation</button>
           <button cButton cDropdownToggle color="secondary" variant="outline" size="sm" split></button>
+          
           <ul cDropdownMenu>
-            <li><button (click)="setTrafficPeriod('Day')" cDropdownItem>Day</button></li>
-            <li><button (click)="setTrafficPeriod('Month')" cDropdownItem>Month</button></li>
-            <li><button (click)="setTrafficPeriod('Year')" cDropdownItem>Year</button></li>
+            <li>
+              <button *ngFor="let type of type; index as i" 
+                (click)="setTrafficPeriod(type.variation)" 
+              cDropdownItem>
+                {{ type.variation }}
+              </button>
+            </li>
           </ul>
         </c-dropdown>
 

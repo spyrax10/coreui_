@@ -23,10 +23,10 @@ export const navItems: INavData[] = [
   },
 
   // //Reports Section
-  // {
-  //   title: true,
-  //   name: 'Reports'
-  // },
+  {
+    title: true,
+    name: 'Reports'
+  },
   // {
   //   name: 'Sales',
   //   url: '/sales/reports',
