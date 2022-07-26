@@ -31,7 +31,13 @@ export class SalesComponent implements OnInit {
   }
 
   setTrafficPeriod(value: string): void {
+    this.onSelected(value);
     this.chartsData.initMainChart(value);
     this.initCharts();
   }
+
+  selectedFilter = '';
+	onSelected(value:string): void {
+		this.selectedFilter = value;
+	}
 }
