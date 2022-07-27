@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/utils/src';
+import { SalesComponent } from './sales.component';
 
 export interface IChartProps {
   data?: any;
@@ -20,19 +21,29 @@ export class SalesChartsData {
     this.initMainChart();
   }
 
+
   public mainChart: IChartProps = {};
 
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  initMainChart(period: string = 'Month') {
+  initMainChart(period: string = 'Month', year: number = 0, 
+    date_from: string = '', date_to: string = '') {
+
+    const saleFunction = new SalesComponent(this);
+
     const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
     const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
     const brandInfoBg = hexToRgba(getStyle('--cui-info'), 10) ?? '#20a8d8';
     const brandDanger = getStyle('--cui-danger') || '#f86c6b';
-
-    // mainChart
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday',
+      'Friday', 'Saturday', 'Sunday'
+    ];
+    
     // mainChart
     this.mainChart['elements'] = period === 'Month' ? 12 : 27;
     this.mainChart['Data1'] = [];
@@ -48,51 +59,25 @@ export class SalesChartsData {
 
     let labels: string[] = [];
     if (period === 'Month') {
-      labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ];
+      labels = months;
     }
-     //Testing Data
-     else if (period == 'Year') {
-      labels = [
-        '2010',
-        '2011',
-        '2012',
-        '2013',
-        '2014',
-        '2015',
-        '2016',
-        '2017',
-        '2018',
-        '2019',
-        '2020',
-        '2021',
-        '2022',
-      ]
+    else if (period == 'Year') {
+      if (year == 0) {
+        saleFunction.year_range().forEach(element => {
+          labels.push(element.toString());
+        });
+      }
+      else {
+        labels = months;
+      }
     }
     else {
-      /* tslint:disable:max-line-length */
-      const week = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-      ];
-      labels = week.concat(week, week, week);
+
+      if (date_from == '' && date_to == '') {
+        saleFunction.date_range().forEach(element => {
+          labels.push(element);
+        });
+      }
     }
 
     const colors = [

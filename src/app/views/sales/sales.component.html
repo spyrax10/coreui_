@@ -12,12 +12,14 @@
       <c-col class="d-none d-md-block" sm="7">
 
         <c-dropdown class="float-end" variant="btn-group">
-          <button cButton color="secondary" variant="outline" size="sm">
-            {{ selectedFilter == '' ? 'Select Filter Type' : selectedFilter }}
+          <button cButton color="dark" variant="outline" size="sm">
+            {{ selectedFilter == '' ? 'Select Filter Type: ' : 'Selected Filter: ' }}
           </button>
-          <button cButton cDropdownToggle color="secondary" variant="outline" size="sm" split></button>
+          <button cButton cDropdownToggle color="dark" variant="outline" size="sm" split>
+            {{ selectedFilter == '' ? 'None' : selectedFilter }}
+          </button>
           
-          <ul cDropdownMenu>
+          <ul cDropdownMenu onselect='SelectedType()'>
             <li>
               <button *ngFor="let type of type; index as i" 
                 (click)="setTrafficPeriod(type.variation)" 
@@ -32,6 +34,29 @@
       </c-col>
 
     </c-row>
+
+    <div *ngIf="selectedFilter == 'Year'">
+      <c-row class="float-end mt-1">
+        <c-dropdown variant="btn-group">
+          <button cButton color="dark" size="sm">
+            Selected Year:
+          </button>
+          <button cButton cDropdownToggle color="dark" size="sm" split>
+            {{ selectedYear == 0 ? 'None' : selectedYear }}
+          </button>
+          
+          <ul cDropdownMenu onselect="SelectedYear()">
+            <li>
+              <button *ngFor="let year of year_range(); index as i" 
+                (click)="setTrafficPeriod(selectedFilter, year)" 
+              cDropdownItem>
+                {{ year }}
+              </button>
+            </li>
+          </ul>
+        </c-dropdown>
+      </c-row>
+    </div>
 
     <div *ngIf="selectedFilter == 'Day'">
       <c-row class="float-end">
@@ -53,18 +78,6 @@
       </c-row>
     </div>
 
-    <div *ngIf="selectedFilter == 'Month'">
-      <c-row class="float-end">
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker_1" placeholder="Date From:">
-          <mat-datepicker-toggle matSuffix [for]="picker_1"></mat-datepicker-toggle>
-          <mat-datepicker #picker_1></mat-datepicker>
-        </mat-form-field>
-      </c-row>
-    </div>
-
-    
-   
     <c-chart [data]="mainChart.data"
              [height]="300"
              [ngStyle]="{'marginTop.px': 55}"
