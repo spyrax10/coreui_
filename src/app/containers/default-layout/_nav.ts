@@ -19,7 +19,17 @@ export const navItems: INavData[] = [
   {
     name: 'Sales',
     url: '/sales',
-    iconComponent: { name: 'cil-chart-line' }
+    iconComponent: { name: 'cil-chart-line' },
+    children : [
+      {
+        name: 'Sales Dashboard',
+        url: '/sales'
+      },
+      {
+        name: 'Daily Sales Per Branch',
+        url: '/salesBR'
+      }
+    ]
   },
   {
     name: 'Purchases',

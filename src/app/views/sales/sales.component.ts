@@ -72,6 +72,8 @@ export class SalesComponent implements OnInit {
   dateTo: any = '';
 	SelectedType(value: string): void {
 		this.selectedFilter = value;
+    this.dateFrom = '';
+    this.dateTo = '';
 	}
 
   SelectedYear(value: number) : void {
