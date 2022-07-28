@@ -59,20 +59,25 @@
     </div>
 
     <div *ngIf="selectedFilter == 'Day'">
-      <c-row class="float-end">
+      <c-row class="float-end mt-1">
         <c-col>
           <mat-form-field>
-            <input matInput [matDatepicker]="picker_1" placeholder="Date From:">
+            <input matInput [matDatepicker]="picker_1" placeholder="Date From:" 
+              (dateChange)="DateFromChange($event)"
+            disabled>
             <mat-datepicker-toggle matSuffix [for]="picker_1"></mat-datepicker-toggle>
-            <mat-datepicker #picker_1></mat-datepicker>
+            <mat-datepicker #picker_1 disabled="false"></mat-datepicker>
           </mat-form-field>
         </c-col>
   
         <c-col>
           <mat-form-field >
-            <input matInput [matDatepicker]="picker_2" placeholder="Date To:">
-            <mat-datepicker-toggle matSuffix [for]="picker_2"></mat-datepicker-toggle>
-            <mat-datepicker #picker_2></mat-datepicker>
+            <input matInput [matDatepicker]="picker_2" placeholder="Date To:" 
+              (dateChange)="setTrafficPeriod(selectedFilter, selectedYear, $event)"
+            disabled>
+            <mat-datepicker-toggle matSuffix [for]="picker_2">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker_2 disabled="false"></mat-datepicker>
           </mat-form-field>
         </c-col>
       </c-row>

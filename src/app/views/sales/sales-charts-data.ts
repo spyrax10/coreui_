@@ -21,7 +21,6 @@ export class SalesChartsData {
     this.initMainChart();
   }
 
-
   public mainChart: IChartProps = {};
 
   public random(min: number, max: number) {
@@ -77,6 +76,24 @@ export class SalesChartsData {
         saleFunction.date_range().forEach(element => {
           labels.push(element);
         });
+      }
+      else {
+      
+        if (new Date(date_to) > new Date(date_from)) {
+
+          let currentDate = new Date(date_from);
+
+          while (currentDate <= new Date(date_to)) {
+            labels.push(saleFunction.parseDate(new Date(currentDate)));
+            currentDate.setDate(currentDate.getDate() + 1);
+          }
+        }
+        else {
+           //Should Trigger Error Warning
+          saleFunction.date_range().forEach(element => {
+            labels.push(element);
+          });
+        }
       }
     }
 

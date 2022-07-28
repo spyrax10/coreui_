@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { SalesChartsData, IChartProps } from './sales-charts-data';
 
 interface IType {variation: string;}
-
 @Component({
   templateUrl: 'sales.component.html',
   styleUrls: ['sales.component.scss']
@@ -54,20 +52,43 @@ export class SalesComponent implements OnInit {
     this.mainChart = this.chartsData.mainChart;
   }
 
-  setTrafficPeriod(value: string = '', year: number = 0): void {
+  setTrafficPeriod(value: string = '', year: number = 0, date_to: any = ''): void {
+
     this.SelectedType(value);
     this.SelectedYear(year);
-    this.chartsData.initMainChart(value, year);
+    this.DateToChange(date_to);
+    
+    this.chartsData.initMainChart(
+      value, year, 
+      this.dateFrom, 
+      date_to.value
+    );
     this.initCharts();
   }
 
   selectedFilter = '';
   selectedYear = 0;
-	SelectedType(value:string): void {
+  dateFrom = '';
+  dateTo: any = '';
+	SelectedType(value: string): void {
 		this.selectedFilter = value;
 	}
 
-  SelectedYear(value:number) : void {
+  SelectedYear(value: number) : void {
     this.selectedYear = value;
+  }
+
+  DateFromChange($event: any = '') {
+    this.dateFrom = $event != '' ? this.parseDate($event.value) : '';
+  }
+
+  DateToChange($event: any = '') {
+    this.dateTo = $event != '' ? this.parseDate($event.value) : '';
+  }
+
+  public parseDate(date: any) {
+    var d = new Date(Date.parse(date));
+    //Bug: Why Add 1 Month?
+    return d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
   }
 }
