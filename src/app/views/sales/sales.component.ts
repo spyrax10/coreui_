@@ -25,9 +25,10 @@ export class SalesComponent implements OnInit {
     return ret_arr;
   }
 
-  public date_range(month: number = 0, year: number = 0) {
-    month = month == 0 ? new Date().getMonth() : month;
-    year = year == 0 ? new Date().getFullYear() : year;
+  public date_range() {
+    //Bug: Why Add 1 Month?
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
     var ret_arr = [];
 
     for(let i = 1; i <= 7; i++) {
@@ -57,7 +58,8 @@ export class SalesComponent implements OnInit {
     this.SelectedType(value);
     this.SelectedYear(year);
     this.DateToChange(date_to);
-    
+    this.setSubTitle();
+
     this.chartsData.initMainChart(
       value, year, 
       this.dateFrom, 
@@ -68,12 +70,17 @@ export class SalesComponent implements OnInit {
 
   selectedFilter = '';
   selectedYear = 0;
-  dateFrom = '';
-  dateTo: any = '';
+  public dateFrom = '';
+  public dateTo = '';
+  subTitle = '';
+
+  setSubTitle() {
+    if (this.dateFrom != '' && this.dateTo != '') {
+      this.subTitle = this.parseDate(this.dateFrom, true) + " - " + this.parseDate(this.dateTo, true);
+    }
+  }
 	SelectedType(value: string): void {
 		this.selectedFilter = value;
-    this.dateFrom = '';
-    this.dateTo = '';
 	}
 
   SelectedYear(value: number) : void {
@@ -88,9 +95,14 @@ export class SalesComponent implements OnInit {
     this.dateTo = $event != '' ? this.parseDate($event.value) : '';
   }
 
-  public parseDate(date: any) {
+  public parseDate(date: any, in_word: boolean = false) {
     var d = new Date(Date.parse(date));
     //Bug: Why Add 1 Month?
-    return d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
+    if (in_word) {
+      return d.toDateString();
+    }
+    else {
+      return d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
+    }
   }
 }
