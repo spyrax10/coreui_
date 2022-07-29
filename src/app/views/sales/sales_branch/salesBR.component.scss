@@ -1,0 +1,20 @@
+:host {
+  .legend {
+    small {
+      font-size: x-small;
+    }
+  }
+}
+
+.dropdown-menu {
+  max-height: 300px; 
+  overflow-y: auto; 
+}
+
+#inty_val {
+  color: #E55353;
+}
+
+#sale_val {
+  color: #3399FF;
+}

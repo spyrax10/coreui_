@@ -1,0 +1,172 @@
+<!-- <app-widgets-dropdown></app-widgets-dropdown> -->
+
+<c-card color="dark" textColor="light" class="mb-2">
+  <c-card-body>
+    <c-row>  
+      <c-col sm="5">
+        <h4 text class="card-title mb-0" id="traffic"> Daily Sales Per Branch</h4>
+        <!-- <div class="small text-medium-emphasis">January - December 2021</div> -->
+      </c-col>
+    </c-row>
+  </c-card-body>
+
+</c-card>
+
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <c-card-body>
+        <c-row>
+          <c-col md="6" xl="6" xs="12">
+
+            <h5 class="card-title mb-4"> Sales vs Inventory Per Branch: </h5>
+
+            <div class="progress-group mb-4" *ngFor="let branch of branch; index as i" >
+
+              <div class="progress-group-prepend">
+                <span class="text-medium-emphasis small">{{ branch.short_name }}</span>
+              </div>
+              
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="info" [value]="branch.sales_value"></c-progress-bar>
+                </c-progress>
+
+                <c-progress thin>
+                  <c-progress-bar color="danger" [value]="branch.invty_value"></c-progress-bar>
+                </c-progress>
+
+              </div>
+            </div>
+          
+            <div class="legend text-center" ngPreserveWhitespaces>
+              <small>
+                <sup>
+                  <span class="badge badge-pill badge-sm bg-info">&nbsp;</span>
+                </sup>
+                <span>Sales</span>
+                
+                &nbsp;&nbsp;
+
+                <sup>
+                  <span class="badge badge-pill badge-sm bg-danger">&nbsp;</span>
+                </sup>
+                <span>Inventory</span>
+              </small> 
+            </div>
+            
+          </c-col>
+
+          <c-col md="6" xl="6" xs="12">
+
+            <h5 class="card-title mb-4">Total Sales {{"&"}} Total Sales Based on Inventory: </h5>
+
+            <div class="progress-group mb-4">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cilChartLine"></svg>
+                <span>Total Sales</span>
+                <span class="ms-auto font-semibold">43%</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="warning" value="43"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+            <div class="progress-group mb-5">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" name="cilChart"></svg>
+                <span>Total Sales Based on Inventory</span>
+                <span class="ms-auto font-semibold">37%</span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="warning" value="37"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+
+            <h5 class="card-title mb-4"> Top Saleable Items: </h5>
+
+            <div class="progress-group" *ngFor="let item of item; index as i">
+              <div class="progress-group-header">
+                <svg cIcon class="icon icon-lg me-2" [name]="item.icon"></svg>
+                <span> {{ item.item_name }} </span>
+                <span class="ms-auto font-semibold">
+                  {{ item.total_sales }} <span class="text-medium-emphasis small">({{ item.sales_percentage }}%)</span>
+                </span>
+              </div>
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar color="success" [value]="item.sales_percentage"></c-progress-bar>
+                </c-progress>
+              </div>
+            </div>
+
+          </c-col>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <c-card-header>Branch Daily Report</c-card-header>
+      <c-card-body>
+        <table bordered [hover]="true" [responsive]="true" [striped]="true"
+          align="middle" cTable class="mb-0 border">
+
+          <thead cTableColor="dark">
+          <tr>
+            <th>Branches</th>
+            <th>Sales vs Inventory</th>
+            <th>Activity</th>
+          </tr>
+          </thead>
+
+          <tbody>
+
+          <tr *ngFor="let branch of branch; index as i">
+            <td width="40%">
+              <div>{{ branch.long_name }}</div>
+              <div class="small text-medium-emphasis">
+                <span>{{ branch.address }}</span> 
+              </div>
+            </td>
+
+            <td width="45%">
+              <div class="clearfix">
+                <div class="float-start">
+                  <strong id="sale_val">{{ branch.sales_value }}%</strong>
+                </div>
+                <div class="float-end">
+                  <strong id="inty_val">{{ branch.invty_value }}%</strong>
+                </div>
+              </div>
+              
+              <div class="progress-group-bars">
+                <c-progress thin>
+                  <c-progress-bar [value]="branch.sales_value" color="info"></c-progress-bar>
+                </c-progress>
+  
+                <c-progress thin>
+                  <c-progress-bar [value]="branch.invty_value" color="danger"></c-progress-bar>
+                </c-progress>
+              </div>
+
+            </td>
+
+            <td width="15%">
+              <div class="small text-medium-emphasis">Last Update</div>
+              <strong>{{ branch.last_update }}</strong>
+            </td>
+            
+          </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

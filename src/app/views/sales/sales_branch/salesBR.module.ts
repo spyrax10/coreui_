@@ -20,7 +20,7 @@ import { ChartjsModule } from '@coreui/angular-chartjs';
 import { SalesBRRoutingModule } from './salesBR-routing.module';
 import { SalesBRComponent } from './salesBR.component';
 
-import { WidgetsModule } from '../widgets/widgets.module';
+import { WidgetsModule } from '../../widgets/widgets.module';
 
 import { DropdownModule } from '@coreui/angular';
 

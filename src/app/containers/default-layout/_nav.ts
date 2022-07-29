@@ -5,13 +5,8 @@ export const navItems: INavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    iconComponent: { name: 'cil-align-left' },
-    // badge: {
-    //   color: 'info',
-    //   text: 'NEW'
-    // }
+    iconComponent: { name: 'cil-align-left' }
   },
-
   {
     title: true,
     name: 'Transaction Menu'
@@ -27,7 +22,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Daily Sales Per Branch',
-        url: '/salesBR'
+        url: '/sales_br'
       }
     ]
   },

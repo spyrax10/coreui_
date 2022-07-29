@@ -11,11 +11,9 @@ import { RegisterComponent } from './views/pages/register/register.component';
 import { ForgotComponent } from './views/pages/forgot/forgot.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
+
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  
   {
     path: '',
     component: DefaultLayoutComponent,
@@ -32,12 +30,14 @@ const routes: Routes = [
       {
         path: 'sales',
         loadChildren: () =>
-          import('./views/sales/sales.module').then((m) => m.SalesModule)
+          import('./views/sales/sales.module').then((m) => m.SalesModule
+        )
       },
       {
-        path: 'salesBR',
+        path: 'sales_br',
         loadChildren: () =>
-          import('./views/sales/salesBR.module').then((m) => m.SalesBRModule)
+          import('./views/sales/sales_branch/salesBR.module').then((m) => m.SalesBRModule
+        )
       },
       {
         path: 'purchases',
