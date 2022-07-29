@@ -42,19 +42,6 @@ export class SalesChartsData {
     const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday',
       'Friday', 'Saturday', 'Sunday'
     ];
-    
-    // mainChart
-    this.mainChart['elements'] = period === 'Month' ? 12 : 27;
-    this.mainChart['Data1'] = [];
-    this.mainChart['Data2'] = [];
-    this.mainChart['Data3'] = [];
-
-    // generate random values for mainChart
-    for (let i = 0; i <= this.mainChart['elements']; i++) {
-      this.mainChart['Data1'].push(this.random(50, 240));
-      this.mainChart['Data2'].push(this.random(20, 160));
-      this.mainChart['Data3'].push(65);
-    }
 
     let labels: string[] = [];
     if (period === 'Month') {
@@ -95,6 +82,19 @@ export class SalesChartsData {
           });
         }
       }
+    }
+
+    // mainChart
+    this.mainChart['elements'] = labels.length > 0 ? labels.length : 12;
+    this.mainChart['Data1'] = [];
+    this.mainChart['Data2'] = [];
+    this.mainChart['Data3'] = [];
+  
+    // generate random values for mainChart
+    for (let i = 0; i <= this.mainChart['elements']; i++) {
+      this.mainChart['Data1'].push(this.random(50, 240));
+      this.mainChart['Data2'].push(this.random(20, 160));
+      this.mainChart['Data3'].push(65);
     }
 
     const colors = [
