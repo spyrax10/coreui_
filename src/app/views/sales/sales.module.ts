@@ -18,7 +18,8 @@ import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 
 import { SalesRoutingModule } from './sales-routing.module';
-import { SalesComponent } from './sales.component';
+import { SalesComponent } from '././sales_dashboard/sales.component';
+import { SalesBRComponent } from './sales_branch/salesBR.component';
 
 import { WidgetsModule } from '../widgets/widgets.module';
 
@@ -29,6 +30,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
+  declarations: [
+    SalesComponent,
+    SalesBRComponent
+  ],
   imports: [
     SalesRoutingModule,
     CardModule,
@@ -51,8 +56,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule
-  ],
-  declarations: [SalesComponent]
+  ]
 })
 export class SalesModule {
 }

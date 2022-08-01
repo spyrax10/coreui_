@@ -18,11 +18,11 @@ export const navItems: INavData[] = [
     children : [
       {
         name: 'Sales Dashboard',
-        url: '/sales'
+        url: 'sales/sales_dashboard'
       },
       {
         name: 'Daily Sales Per Branch',
-        url: '/sales_br'
+        url: 'sales/sales_branch'
       }
     ]
   },

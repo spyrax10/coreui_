@@ -34,12 +34,6 @@ const routes: Routes = [
         )
       },
       {
-        path: 'sales_br',
-        loadChildren: () =>
-          import('./views/sales/sales_branch/salesBR.module').then((m) => m.SalesBRModule
-        )
-      },
-      {
         path: 'purchases',
         loadChildren: () =>
           import('./views/purchases/purchases.module').then((m) => m.PurchasesModule)
