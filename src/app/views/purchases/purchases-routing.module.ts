@@ -1,15 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PurchasesComponent } from './purchases.component';
+import { PurchComponent } from './purch_dashboard/purch.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: PurchasesComponent,
     data: {
-      title: $localize`Purchases Dashboard`
-    }
+      title: 'Purchases'
+    },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'purch_dashboard'
+      },
+      {
+        path: 'purch_dashboard',
+        component: PurchComponent,
+        data: {
+          title: 'Purchases Dashboard'
+        }
+      }
+    ]
   }
 ];
 
@@ -17,5 +31,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PurchasesRoutingModule {
+export class PurchRoutingModule {
 }

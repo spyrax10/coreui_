@@ -29,7 +29,13 @@ export const navItems: INavData[] = [
   {
     name: 'Purchases',
     url: '/purchases',
-    iconComponent: { name: 'cil-basket' }
+    iconComponent: { name: 'cil-basket' },
+    children : [
+      {
+        name: 'Purchases Dashboard',
+        url: 'purchases/purch_dashboard'
+      }
+    ]
   },
   {
     name: 'Inventory',

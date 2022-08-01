@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
-import { PurchasesChartsData, IChartProps } from './purchases-charts-data';
+import { PurchasesChartsData, IChartProps } from './purch-charts-data';
 
 interface IUser {
   name: string;
@@ -18,10 +18,10 @@ interface IUser {
 }
 
 @Component({
-  templateUrl: 'purchases.component.html',
-  styleUrls: ['purchases.component.scss']
+  templateUrl: 'purch.component.html',
+  styleUrls: ['purch.component.scss']
 })
-export class PurchasesComponent implements OnInit {
+export class PurchComponent implements OnInit {
   constructor(private chartsData: PurchasesChartsData) {
   }
 
