@@ -1,6 +1,7 @@
 import { Component, Input, NgModule } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 // import { ModalModule } from '../../../../app/views/notifications/modals/modals.component';
+import Swal from 'sweetalert2';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 
@@ -19,5 +20,26 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   constructor(private classToggler: ClassToggleService) {
     super();
+  }
+
+  sweetAlert() {
+    Swal.fire({
+      title: 'Logout Confirmation',
+      text: 'Are you sure you want to logout?',
+      icon: 'warning',
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log me out!',
+      cancelButtonText: 'No, I want to stay!'
+    }).then((response: any) => {
+      if (response.value) {
+        this.logOut();
+      } 
+    })
+  }
+
+  logOut() {
+    location.replace('/login');
   }
 }

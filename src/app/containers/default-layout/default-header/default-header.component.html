@@ -105,14 +105,12 @@
           <svg cIcon class="me-2" name="cilLockLocked"></svg>
           Lock Account
         </a>
-        <a routerLink="/login" cDropdownItem>
+        <a [routerLink]="[]" (click)="sweetAlert()" cDropdownItem>
           <svg cIcon class="me-2" name="cilAccountLogout"></svg>
           Logout
         </a>
       </li>
-      <li></li>
     </ul>
   </c-dropdown>
 </ng-template>
 <!-- Side User Menu -->
-
