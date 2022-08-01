@@ -40,7 +40,13 @@ export const navItems: INavData[] = [
   {
     name: 'Inventory',
     url: '/inventory',
-    iconComponent: { name: 'cil-chart' }
+    iconComponent: { name: 'cil-chart' },
+    children : [
+      {
+        name: 'Inventory Dashboard',
+        url: 'inventory/invty_dashboard'
+      }
+    ]
   },
 
   // //Reports Section

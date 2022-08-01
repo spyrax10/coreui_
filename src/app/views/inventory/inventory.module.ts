@@ -18,7 +18,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 
 import { InventoryRoutingModule } from './inventory-routing.module';
-import { InventoryComponent } from './inventory.component';
+import { InventoryComponent } from '../inventory/invty_dashboard/inventory.component';
 
 import { WidgetsModule } from '../widgets/widgets.module';
 

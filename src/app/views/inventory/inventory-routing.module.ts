@@ -1,15 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { InventoryComponent } from './inventory.component';
+import { InventoryComponent } from '../inventory/invty_dashboard/inventory.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: InventoryComponent,
     data: {
-      title: $localize`Inventory Dashboard`
-    }
+      title: 'Inventory'
+    },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'invty_dashboard'
+      },
+      {
+        path: 'invty_dashboard',
+        component: InventoryComponent,
+        data: {
+          title: 'Inventory Dashboard'
+        }
+      }
+    ]
   }
 ];
 
