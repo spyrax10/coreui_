@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ValidationFormsService } from '../../../_services/validation-forms.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SwalService } from '../../../_services/swal-service';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +11,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginComponent {
 
+  real_user = 'spyrax10';
+  real_pass = '$Abcde123$';
   simpleForm!: FormGroup;
   submitted = false;
   formErrors: any;
-  constructor(private fb: FormBuilder, public vf: ValidationFormsService) {
+  constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swalService: SwalService) {
     this.formErrors = this.vf.errorMessages;
     this.createForm();
   }
@@ -49,10 +52,20 @@ export class LoginComponent {
     return this.simpleForm.status === 'VALID';
   }
 
+  checkLogin() {
+    if (this.real_user == this.simpleForm.value.username && this.real_pass == this.simpleForm.value.password) {
+      return true;
+    }
+    return false;
+  }
+
   onSubmit() {
 
-    if (this.onValidate()) {
+    if (this.onValidate() && this.checkLogin()) {
       location.replace('/dashboard');
+    }
+    else {
+      this.swalService.errorTopEnd('Incorrect Credentials');
     }
   }
 }

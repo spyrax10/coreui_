@@ -1,10 +1,6 @@
-import { Component, Input, NgModule } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-// import { ModalModule } from '../../../../app/views/notifications/modals/modals.component';
-import Swal from 'sweetalert2';
-
+import { Component, Input} from '@angular/core';
+import { SwalService } from '../../../_services/swal-service';
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
-
 
 @Component({
   selector: 'app-default-header',
@@ -18,28 +14,21 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public newTasks = new Array(5)
   public newNotifications = new Array(5)
 
-  constructor(private classToggler: ClassToggleService) {
+  constructor(private classToggler: ClassToggleService, public swalService: SwalService) {
     super();
   }
 
-  sweetAlert() {
-    Swal.fire({
-      title: 'Logout Confirmation',
-      text: 'Are you sure you want to logout?',
-      icon: 'warning',
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-      showCancelButton: true,
-      confirmButtonText: 'Yes, log me out!',
-      cancelButtonText: 'No, I want to stay!'
-    }).then((response: any) => {
-      if (response.value) {
-        this.logOut();
-      } 
-    })
+  logOut() {
+    this.swalService.centeredConfirm(
+      this.routeOut, 
+      "Logout Confirmation",
+      "Are you sure to Logout?",
+      "warning", false, false, true,
+      "Yes, I want to logout", "No, I want to stay!"
+    );
   }
 
-  logOut() {
+  routeOut() {
     location.replace('/login');
   }
 }
