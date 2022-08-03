@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 
-const Toast2 = Swal.mixin({
+
+const toast_end = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true
+});
+
+const toast_centered = Swal.mixin({
     toast: true,
     position: 'top',
     showConfirmButton: false,
@@ -16,11 +25,18 @@ const Toast2 = Swal.mixin({
 export class SwalService {
     
     constructor() { }
-    
-    public errorTopEnd(msg: string = '') { 
-        Toast2.fire({
+
+    public commonSwalEnd(msg: string = '', icon: any = '') {
+        toast_end.fire({
             title: msg,
-            icon: 'error'
+            icon: icon
+        });
+    }
+    
+    public commonSwalCentered(msg: string = '', icon: any = 'success') { 
+        toast_centered.fire({
+            title: msg,
+            icon: icon
         });
     }
 

@@ -65,7 +65,7 @@ export class LoginComponent {
       location.replace('/dashboard');
     }
     else {
-      this.swalService.errorTopEnd('Incorrect Credentials');
+      this.swalService.commonSwalCentered('Incorrect Credentials', 'error');
     }
   }
 }

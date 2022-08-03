@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/utils/src';
 import { SalesComponent } from './sales.component';
+import { SwalService } from '../../../_services/swal-service';
 
 export interface IChartProps {
   data?: any;
@@ -17,7 +18,7 @@ export interface IChartProps {
   providedIn: 'any'
 })
 export class SalesChartsData {
-  constructor() {
+  constructor(public swalService: SwalService) {
     this.initMainChart();
   }
 
@@ -76,7 +77,10 @@ export class SalesChartsData {
           }
         }
         else {
-           //Should Trigger Error Warning
+          this.swalService.commonSwalEnd(
+            'Invalid Date Range!',
+            'warning'
+          );
           saleFunction.date_range().forEach(element => {
             labels.push(element);
           });
