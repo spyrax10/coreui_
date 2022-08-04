@@ -140,7 +140,7 @@ const routes: Routes = [
       title: 'Password Recovery Page'
     }
   },
-  {path: '**', redirectTo: 'dashboard'}
+  {path: '**', redirectTo: '404'}
 ];
 
 @NgModule({
