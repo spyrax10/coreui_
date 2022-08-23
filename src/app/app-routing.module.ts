@@ -10,9 +10,17 @@ import { Login3Component } from './views/pages/login_3/login3.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { ForgotComponent } from './views/pages/forgot/forgot.component';
 
+/**
+ * TODO: Create function to determine if current user is already login...
+ * If already login, redirect user to dashboard page else redirect to login page...
+ * This is will trigger whenever user click the 'Home' link found on the top of every page...
+*/
+
+let is_logIn = true;
+
 const routes: Routes = [
 
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: '', redirectTo: is_logIn ? 'dashboard' : 'login', pathMatch: 'full'},
   
   {
     path: '',
