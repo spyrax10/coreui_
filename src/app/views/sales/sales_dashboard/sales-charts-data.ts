@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/utils/src';
 import { SalesComponent } from './sales.component';
 import { SwalService } from '../../../_services/swal-service';
+import { ApiHttpService } from '../../../_services/api-http.service';
 
 export interface IChartProps {
   data?: any;
@@ -18,7 +19,7 @@ export interface IChartProps {
   providedIn: 'any'
 })
 export class SalesChartsData {
-  constructor(public swalService: SwalService) {
+  constructor(public swalService: SwalService, public api: ApiHttpService) {
     this.initMainChart();
   }
 
@@ -43,6 +44,8 @@ export class SalesChartsData {
     const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday',
       'Friday', 'Saturday', 'Sunday'
     ];
+
+    this.api.getContacts();
 
     let labels: string[] = [];
     if (period === 'Month') {
