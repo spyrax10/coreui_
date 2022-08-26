@@ -10,7 +10,7 @@ import { SwalService } from '../_services/swal-service';
 export class ApiHttpService { 
 constructor( private http: HttpClient, public swalService: SwalService ) { } 
 
-    public data: any = {};
+    public val_arr: any = [];
     public get(url: string, options?: any) { 
         return this.http.get(url, options); 
     } 
@@ -25,15 +25,18 @@ constructor( private http: HttpClient, public swalService: SwalService ) { }
     } 
 
     public getData() {
-        return this.http.get(Constants.API_ENDPOINT);;
-    }
-    
-    public getContacts() {
-        this.getData().subscribe(data => {
-          console.log(data);
-          this.data = data;
+        var ret_arr: any = [];
+        this.http.get(Constants.API_ENDPOINT).subscribe((data: any) => {
+            Object.keys(data).forEach(key => {
+                if (key === 'entries') {
+                    this.val_arr.push(data[key]);
+                    ret_arr.push(data[key]);
+                }
+            });
         },
-        error => this.swalService.commonSwalCentered('Cannot Connect to Server!', 'error')
+          error => this.swalService.commonSwalCentered('Cannot Connect to Server!', 'error')
         );
+        console.log(ret_arr);
+        return ret_arr;
     }
 }

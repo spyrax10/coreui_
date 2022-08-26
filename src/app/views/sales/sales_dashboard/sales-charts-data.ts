@@ -3,6 +3,10 @@ import { getStyle, hexToRgba } from '@coreui/utils/src';
 import { SalesComponent } from './sales.component';
 import { SwalService } from '../../../_services/swal-service';
 import { ApiHttpService } from '../../../_services/api-http.service';
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
+import { Constants } from 'src/app/_config/constant';
 
 export interface IChartProps {
   data?: any;
@@ -15,11 +19,23 @@ export interface IChartProps {
   [propName: string]: any;
 }
 
+interface APIData {
+  api_name: string;
+  api_description: string;
+  api_auth: string;
+  api_https: boolean;
+  api_cors: string;
+  api_link: string;
+  api_category: string
+}
+
 @Injectable({
   providedIn: 'any'
 })
 export class SalesChartsData {
-  constructor(public swalService: SwalService, public api: ApiHttpService) {
+  public _api: Observable<APIData>;
+
+  constructor(public swalService: SwalService, public api: ApiHttpService, private http: HttpClient) {
     this.initMainChart();
   }
 
@@ -27,6 +43,29 @@ export class SalesChartsData {
 
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  public fetchAPI() {
+    this._api = this.http.get<any>(Constants.API_ENDPOINT).pipe(
+      map(response => ({
+          api_name: "eman",
+          api_description: response.Description,
+          api_auth: response['Auth'],
+          api_https: response.HTTPS,
+          api_cors: response.Cors,
+          api_link: response.Link,
+          api_category: response.Category
+        } as APIData)
+      )
+    );
+
+    this.api.val_arr.forEach((data: any) => {
+      console.log(data);
+    });
+
+    this._api.forEach(data => {
+      console.log(data);
+    });
   }
 
   initMainChart(period: string = 'Month', year: number = 0, 
@@ -45,7 +84,8 @@ export class SalesChartsData {
       'Friday', 'Saturday', 'Sunday'
     ];
 
-    this.api.getContacts();
+    this.api.getData();
+    this.fetchAPI();
 
     let labels: string[] = [];
     if (period === 'Month') {
