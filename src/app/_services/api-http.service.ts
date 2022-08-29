@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'; 
 import { HttpClient } from '@angular/common/http'; 
-import { Constants } from '../_config/constant';
 import { SwalService } from '../_services/swal-service';
 
 @Injectable({
@@ -10,7 +9,6 @@ import { SwalService } from '../_services/swal-service';
 export class ApiHttpService { 
 constructor( private http: HttpClient, public swalService: SwalService ) { } 
 
-    public val_arr: any = [];
     public get(url: string, options?: any) { 
         return this.http.get(url, options); 
     } 
@@ -24,19 +22,31 @@ constructor( private http: HttpClient, public swalService: SwalService ) { }
         return this.http.delete(url, options); 
     } 
 
-    public getData() {
+    public getData(api: any = '') {
+        return this.http.get<any>(api);
+    }
+
+    public getAPI(api_add: string = '', api_key: string = '') {
         var ret_arr: any = [];
-        this.http.get(Constants.API_ENDPOINT).subscribe((data: any) => {
-            Object.keys(data).forEach(key => {
+    
+        this.getData(api_add).subscribe(main => {
+            Object.keys(main).forEach(key => {
                 if (key === 'entries') {
-                    this.val_arr.push(data[key]);
-                    ret_arr.push(data[key]);
+                    main[key].forEach((data: any) => {
+
+                        if (api_key != '') {
+                            if (data.Auth == api_key) {
+                                ret_arr.push(data);
+                            }
+                        }
+                        else {
+                            ret_arr.push(data);
+                        }
+                    });
                 }
             });
-        },
-          error => this.swalService.commonSwalCentered('Cannot Connect to Server!', 'error')
-        );
-        console.log(ret_arr);
+        });
+        
         return ret_arr;
     }
 }
