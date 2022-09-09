@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'; 
 import { HttpClient } from '@angular/common/http'; 
 import { SwalService } from '../_services/swal-service';
+import { Constants } from '../_config/constant';
 
 @Injectable({
     providedIn: 'root'
@@ -26,25 +27,31 @@ constructor( private http: HttpClient, public swalService: SwalService ) { }
         return this.http.get<any>(api);
     }
 
-    public getAPI(api_add: string = '', api_key: string = '') {
+    public getAPI(module: string = '') {
+        return Constants.API_ENDPOINT + "api/" + module;
+    }
+
+    public getAPIData(api_add: string = '', api_key: string = '') {
         var ret_arr: any = [];
     
         this.getData(api_add).subscribe(main => {
-            Object.keys(main).forEach(key => {
-                if (key === 'entries') {
-                    main[key].forEach((data: any) => {
 
-                        if (api_key != '') {
-                            if (data.Auth == api_key) {
-                                ret_arr.push(data);
-                            }
-                        }
-                        else {
-                            ret_arr.push(data);
-                        }
-                    });
-                }
-            });
+            ret_arr.push(main);
+            // Object.keys(main).forEach(key => {
+            //     if (key === 'entries') {
+            //         main[key].forEach( {
+
+            //             if (api_key != '') {
+            //                 if (data.Auth == api_key) {
+            //                     ret_arr.push(data);
+            //                 }
+            //             }
+            //             else {
+            //                 ret_arr.push(data);
+            //             }
+            //         });
+            //     }
+            // });
         });
         
         return ret_arr;

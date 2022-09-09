@@ -14,11 +14,11 @@ import { ForgotComponent } from './views/pages/forgot/forgot.component';
  * This is will trigger whenever user click the 'Home' link found on the top of every page...
 */
 
-let is_logIn = true;
+let is_logIn = true; //is_logIn ? 'dashboard' : 'login'
 
 const routes: Routes = [
 
-  {path: '', redirectTo: is_logIn ? 'dashboard' : 'login', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   
   {
     path: '',

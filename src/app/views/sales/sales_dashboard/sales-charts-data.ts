@@ -48,7 +48,7 @@ export class SalesChartsData {
       'Friday', 'Saturday', 'Sunday'
     ];
 
-    console.log(this.api.getAPI(Constants.API_ENDPOINT, 'apiKey'));
+    console.log(this.api.getAPIData(this.api.getAPI('Useraccount'), 'apiKey'));
 
     let labels: string[] = [];
     if (period === 'Month') {

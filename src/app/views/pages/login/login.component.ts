@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ValidationFormsService } from '../../../_services/validation-forms.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalService } from '../../../_services/swal-service';
+import { Users } from '../../../_services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
   simpleForm!: FormGroup;
   submitted = false;
   formErrors: any;
-  constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swalService: SwalService) {
+  constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swalService: SwalService, public user: Users) {
     this.formErrors = this.vf.errorMessages;
     this.createForm();
   }
@@ -34,9 +35,9 @@ export class LoginComponent {
         ],
         password: ['', 
           [
-            Validators.required,
-            Validators.minLength(this.vf.formRules.passwordMin),
-            Validators.pattern(this.vf.formRules.passwordPattern),
+            Validators.required
+            // Validators.minLength(this.vf.formRules.passwordMin),
+            // Validators.pattern(this.vf.formRules.passwordPattern),
           ]
         ]
       }
@@ -61,7 +62,7 @@ export class LoginComponent {
 
   onSubmit() {
 
-    if (this.onValidate() && this.checkLogin()) {
+    if (this.onValidate() && this.user.checkUser(this.simpleForm.value.username, this.simpleForm.value.password)) {
       location.replace('/dashboard');
     }
     else {
