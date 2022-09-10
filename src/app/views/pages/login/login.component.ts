@@ -61,9 +61,9 @@ export class LoginComponent {
   }
 
   onSubmit() {
-
     if (this.onValidate() && this.user.checkUser(this.simpleForm.value.username, this.simpleForm.value.password)) {
-      location.replace('/dashboard');
+      //location.replace('/dashboard');
+      this.swalService.commonSwalCentered('Correct Credentials', 'success');
     }
     else {
       this.swalService.commonSwalCentered('Incorrect Credentials', 'error');
