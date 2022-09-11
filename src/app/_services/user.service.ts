@@ -10,19 +10,14 @@ export interface USRData {
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 
 export class Users {
-    constructor(public http: ApiHttpService, public swalService: SwalService) {}
-
+    constructor(public http: ApiHttpService, public swal: SwalService) {
+    }
     public user_api_link(username: any = '', password: any = '') {
         return this.http.getAPI('Useraccount') + '/' + username + '/' + password;
-    }
-
-    public checkUser(username: any = '', password: any = '') {
-        console.log(this.getUser(username, password));
-        return false;
     }
 
     public getUser(username: any = '', password: any = '') {
@@ -33,10 +28,14 @@ export class Users {
                     ret_arr.push(result[key]);
                 }
                 else {
-                    ret_arr = null;
+                    ret_arr = [];
                 }
             });
+        }, error => {
+            ret_arr = [];
+            this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'error'); 
         })
+
         return ret_arr;
     }
 }

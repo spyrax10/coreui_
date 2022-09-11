@@ -12,8 +12,7 @@ import { Users } from '../../../_services/user.service';
 })
 export class LoginComponent {
 
-  real_user = 'spyrax10';
-  real_pass = '$Abcde123$';
+  user_arr: any = [];
   simpleForm!: FormGroup;
   submitted = false;
   formErrors: any;
@@ -53,20 +52,23 @@ export class LoginComponent {
     return this.simpleForm.status === 'VALID';
   }
 
-  checkLogin() {
-    if (this.real_user == this.simpleForm.value.username && this.real_pass == this.simpleForm.value.password) {
-      return true;
-    }
-    return false;
+  checkUser() {
+    this.user_arr = this.user.getUser(this.simpleForm.value.username, this.simpleForm.value.password);
   }
 
   onSubmit() {
-    if (this.onValidate() && this.user.checkUser(this.simpleForm.value.username, this.simpleForm.value.password)) {
+    if (this.onValidate()) {
+      this.checkUser();
+      console.log(this.user_arr);
+      
+      
       //location.replace('/dashboard');
-      this.swalService.commonSwalCentered('Correct Credentials', 'success');
-    }
-    else {
-      this.swalService.commonSwalCentered('Incorrect Credentials', 'error');
+      // if (this.user.user_arr.length === 1) {
+      //   this.swalService.commonSwalCentered('Correct Credentials', 'success');
+      // }
+      // else {
+      //   this.swalService.commonSwalCentered('Incorrect Credentials', 'error'); 
+      // }
     }
   }
 }
