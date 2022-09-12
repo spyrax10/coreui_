@@ -3,6 +3,7 @@ import { ValidationFormsService } from '../../../_services/validation-forms.serv
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalService } from '../../../_services/swal-service';
 import { Users } from '../../../_services/user.service';
+import { ApiHttpService } from 'src/app/_services/api-http.service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,17 @@ import { Users } from '../../../_services/user.service';
 })
 export class LoginComponent {
 
+  user_found: boolean = false;
   user_arr: any = [];
   simpleForm!: FormGroup;
   submitted = false;
   formErrors: any;
-  constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swalService: SwalService, public user: Users) {
+  constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swal: SwalService, public user: Users, 
+    public http: ApiHttpService) {
     this.formErrors = this.vf.errorMessages;
     this.createForm();
   }
+  
 
   createForm() {
     this.simpleForm = this.fb.group(
@@ -52,23 +56,30 @@ export class LoginComponent {
     return this.simpleForm.status === 'VALID';
   }
 
-  checkUser() {
-    this.user_arr = this.user.getUser(this.simpleForm.value.username, this.simpleForm.value.password);
-  }
-
   onSubmit() {
     if (this.onValidate()) {
-      this.checkUser();
-      console.log(this.user_arr);
-      
-      
-      //location.replace('/dashboard');
-      // if (this.user.user_arr.length === 1) {
-      //   this.swalService.commonSwalCentered('Correct Credentials', 'success');
-      // }
-      // else {
-      //   this.swalService.commonSwalCentered('Incorrect Credentials', 'error'); 
-      // }
+      this.http.getData(this.user.user_api_link(this.simpleForm.value.username, this.simpleForm.value.password)).subscribe(result => { 
+        Object.keys(result).forEach(key => {
+            if (result[key]['userName'] === this.simpleForm.value.username && result[key]['password'] === this.simpleForm.value.password) {
+              this.user_found === true;
+              this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
+              localStorage.setItem("userID", result[key]['userID']);
+              localStorage.setItem("userData", JSON.stringify(result[key]));
+              location.replace('/dashboard');
+            }
+            else {
+              this.user_found === false;
+              this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error'); 
+            }
+        });
+      }, error => {
+        this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'error');
+      })
+
+      if (this.user_found === false) {
+        this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error'); 
+      }
+
     }
   }
 }
