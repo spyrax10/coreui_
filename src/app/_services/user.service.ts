@@ -29,7 +29,7 @@ export class Users {
         return data ? true : false;
     }
     
-    public getUserRole(): string {
+    public getUserRole(): number {
         return this.getCurrentUser().securityLevel;
     }
 

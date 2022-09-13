@@ -16,10 +16,12 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public newNotifications = new Array(5)
   public user_data: any = [];
   user_fullName = '';
+  user_role: number = 0;
 
   constructor(private classToggler: ClassToggleService, public swalService: SwalService, public user: Users) {
     super();
     this.user_fullName = this.user.getUserFullName();
+    this.user_role = this.user.getUserRole();
   }
   
   logOut() {

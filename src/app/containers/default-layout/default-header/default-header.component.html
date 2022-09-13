@@ -94,6 +94,13 @@
       </li>
 
       <li>
+        <div *ngIf="user_role == 1">
+          <a [routerLink]="[]" (click)="logOut()" cDropdownItem>
+            <svg cIcon class="me-2" name="cilAccountLogout"></svg>
+            Add New User
+          </a>
+        </div>
+
         <a cDropdownItem>
           <svg cIcon class="me-2" name="cilLockLocked"></svg>
           Lock Account
