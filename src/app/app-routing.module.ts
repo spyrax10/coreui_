@@ -8,6 +8,8 @@ import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { ForgotComponent } from './views/pages/forgot/forgot.component';
 
+import { AuthGuard } from './_guards/auth.guard';
+
 let redirect = JSON.parse(localStorage.getItem('userData')) !== null ? 'dashboard' : 'login'; 
 
 const routes: Routes = [
@@ -23,6 +25,7 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },

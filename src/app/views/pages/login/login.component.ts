@@ -13,8 +13,6 @@ import { ApiHttpService } from 'src/app/_services/api-http.service';
 })
 export class LoginComponent {
 
-  user_found: boolean = false;
-  user_arr: any = [];
   simpleForm!: FormGroup;
   submitted = false;
   formErrors: any;
@@ -24,7 +22,6 @@ export class LoginComponent {
     this.createForm();
   }
   
-
   createForm() {
     this.simpleForm = this.fb.group(
       {
@@ -61,25 +58,19 @@ export class LoginComponent {
       this.http.getData(this.user.user_api_link(this.simpleForm.value.username, this.simpleForm.value.password)).subscribe(result => { 
         Object.keys(result).forEach(key => {
             if (result[key]['userName'] === this.simpleForm.value.username && result[key]['password'] === this.simpleForm.value.password) {
-              this.user_found === true;
-              this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
-              localStorage.setItem("userID", result[key]['userID']);
               localStorage.setItem("userData", JSON.stringify(result[key]));
+              this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
               location.replace('/dashboard');
-            }
-            else {
-              this.user_found === false;
-              this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error'); 
             }
         });
       }, error => {
         this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'error');
       })
 
-      if (this.user_found === false) {
-        this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error'); 
+      if (this.user.isLoggedIn() === false) {
+        this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
       }
-
+      
     }
   }
 }

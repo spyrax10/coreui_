@@ -31,29 +31,4 @@ constructor( private http: HttpClient, public swalService: SwalService ) { }
         return Constants.API_ENDPOINT + "api/" + module;
     }
 
-    public getAPIData(api_add: string = '', api_key: string = '') {
-        var ret_arr: any = [];
-    
-        this.getData(api_add).subscribe(main => {
-
-            ret_arr.push(main);
-            // Object.keys(main).forEach(key => {
-            //     if (key === 'entries') {
-            //         main[key].forEach( {
-
-            //             if (api_key != '') {
-            //                 if (data.Auth == api_key) {
-            //                     ret_arr.push(data);
-            //                 }
-            //             }
-            //             else {
-            //                 ret_arr.push(data);
-            //             }
-            //         });
-            //     }
-            // });
-        });
-        
-        return ret_arr;
-    }
 }

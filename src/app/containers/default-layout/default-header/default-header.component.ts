@@ -1,6 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { SwalService } from '../../../_services/swal-service';
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
+import { Users } from '../../../_services/user.service';
 
 @Component({
   selector: 'app-default-header',
@@ -16,29 +17,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public user_data: any = [];
   user_fullName = '';
 
-  constructor(private classToggler: ClassToggleService, public swalService: SwalService) {
+  constructor(private classToggler: ClassToggleService, public swalService: SwalService, public user: Users) {
     super();
-    this.user_data = JSON.parse(localStorage.getItem('userData'));
-    this.get_userFullName();
+    this.user_fullName = this.user.getUserFullName();
   }
   
-  get_userFullName() {
-    var last_name = ''; var first_name = ''; var initial = '';
-    Object.keys(this.user_data).forEach((data: any) => {
-      if (data === 'lastName') {
-        last_name = this.user_data[data];
-      }
-      else if (data === 'firstName') {
-        first_name = this.user_data[data];
-      }
-      else if (data === 'middleInitial') {
-        initial = this.user_data[data];
-      }
-    });
-
-    this.user_fullName = last_name + ", " + first_name + " " + initial;
-  }
-
   logOut() {
     this.swalService.centeredConfirm(
       this.routeOut, 
@@ -50,7 +33,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   routeOut() {
-    localStorage.clear();
+    localStorage.removeItem('userData');
     location.replace('/login');
   }
 }
