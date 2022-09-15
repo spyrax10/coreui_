@@ -13,8 +13,8 @@ constructor( private http: HttpClient, public swalService: SwalService ) { }
     public get(url: string, options?: any) { 
         return this.http.get(url, options); 
     } 
-    public post(url: string, data: any, options?: any) { 
-        return this.http.post(url, data, options); 
+    public post(module: any, data: any, options?: any) { 
+        return this.http.post(this.getAPI(module), data, options); 
     } 
     public put(url: string, data: any, options?: any) { 
         return this.http.put(url, data, options); 

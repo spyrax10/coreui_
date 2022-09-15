@@ -3,6 +3,7 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@a
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { JwtModule } from "@auth0/angular-jwt";
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -58,6 +59,10 @@ const APP_CONTAINERS = [
   DefaultLayoutComponent,
 ];
 
+export function tokenGetter() { 
+  return localStorage.getItem("jwt"); 
+}
+
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
   imports: [
@@ -88,7 +93,14 @@ const APP_CONTAINERS = [
     BadgeModule,
     ListGroupModule,
     CardModule,
-    MaterialModule
+    MaterialModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:44382"],
+        disallowedRoutes: []
+      }
+    })
   ],
   providers: [
     {

@@ -36,6 +36,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   routeOut() {
     localStorage.removeItem('userData');
+    localStorage.removeItem("jwt");
     location.replace('/login');
   }
 }

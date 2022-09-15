@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Users } from '../_services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
 
-    constructor(private router: Router, public user: Users) { }
+    constructor(private router: Router, public user: Users,  private jwtHelper: JwtHelperService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.user.getCurrentUser()) {
+        const token = localStorage.getItem("jwt");
+        
+        if (token && !this.jwtHelper.isTokenExpired(token)){
             return true;
         }
 
