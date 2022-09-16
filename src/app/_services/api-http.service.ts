@@ -10,19 +10,6 @@ import { Constants } from '../_config/constant';
 export class ApiHttpService { 
 constructor( private http: HttpClient, public swalService: SwalService ) { } 
 
-    public get(url: string, options?: any) { 
-        return this.http.get(url, options); 
-    } 
-    public post(module: any, data: any, options?: any) { 
-        return this.http.post(this.getAPI(module), data, options); 
-    } 
-    public put(url: string, data: any, options?: any) { 
-        return this.http.put(url, data, options); 
-    } 
-    public delete(url: string, options?: any) { 
-        return this.http.delete(url, options); 
-    } 
-
     public getData(api: any = '') {
         return this.http.get<any>(api);
     }

@@ -5,7 +5,6 @@ import { SwalService } from '../../../_services/swal-service';
 import { Users } from '../../../_services/user.service';
 import { ApiHttpService } from 'src/app/_services/api-http.service';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http'; 
 import { AuthenticatedResponse, LoginModel } from '../../../_interfaces/login.model';
 
 @Component({
@@ -22,7 +21,7 @@ export class LoginComponent {
   submitted = false;
   formErrors: any;
   constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swal: SwalService, public user: Users, 
-    public http: HttpClient, public http2: ApiHttpService) {
+    public http: ApiHttpService) {
     this.formErrors = this.vf.errorMessages;
     this.createForm();
   }
@@ -62,39 +61,50 @@ export class LoginComponent {
     return this.simpleForm.status === 'VALID';
   }
 
+  generateUserData(username: any = '', password: any = '', user_token: any = '') {
+    this.http.getData(this.user.user_api_link(username, password, false)).subscribe(result => { 
+      Object.keys(result).forEach(key => {
+        if (result[key]['lastRowHash'] == user_token) {
+          localStorage.setItem("userData", JSON.stringify(result[key]));
+          this.invalidLogin = false; 
+          this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
+          location.replace('/dashboard');
+        }
+      });
+    })
+  }
+
   onSubmit() {
     if (this.onValidate()) {
-    
-      this.credentials.username = this.simpleForm.value.username;
-      this.credentials.password = this.simpleForm.value.password
+      var username = this.simpleForm.value.username;
+      var password = this.simpleForm.value.password;
 
-      this.http2.getData(this.user.user_api_link(this.simpleForm.value.username, this.simpleForm.value.password, true))
+      this.http.getData(this.user.user_api_link(username, password, true))
       .subscribe({
         next: (response: AuthenticatedResponse) => {
+          this.invalidLogin = false; 
           const token = response.token;
           localStorage.setItem("jwt", token); 
-          this.invalidLogin = false; 
-          console.log(token);
+          if (token) {
+            this.invalidLogin = false; 
+            this.generateUserData(username, password, token);
+          }
+          else {
+            this.swal.commonSwalCentered('Bad Request Has Been Made!!!', 'warning');
+          }
         },
-        error: (err: HttpErrorResponse) => this.invalidLogin = true
+        error: (err: HttpErrorResponse) => {
+          this.invalidLogin = true
+          if (err.status == 401) {
+            this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
+          }
+          else {
+            this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'warning');
+            window.location.reload();
+          }
+        }   
       });
 
-      // this.http.getData(this.user.user_api_link(this.simpleForm.value.username, this.simpleForm.value.password)).subscribe(result => { 
-      //   Object.keys(result).forEach(key => {
-      //       if (result[key]['userName'] === this.simpleForm.value.username && result[key]['password'] === this.simpleForm.value.password) {
-      //         localStorage.setItem("userData", JSON.stringify(result[key]));
-      //         this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
-      //         location.replace('/dashboard');
-      //       }
-      //   });
-      // }, error => {
-      //   this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'error');
-      // })
-
-      // if (this.user.isLoggedIn() === false) {
-      //   this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
-      // }
-      
     }
   }
 }

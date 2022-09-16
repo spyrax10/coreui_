@@ -9,15 +9,7 @@ export class Users {
     }
     
     public user_api_link(username: any = '', password: any = '', token_only: boolean = false) {
-        var link: any = '';
-        
-        if (token_only) {
-            link = this.http.getAPI('Useraccount') + '/' + username + '/' + password + '/true';
-        }
-        else {
-            link = this.http.getAPI('Useraccount') + '/' + username + '/' + password;
-        }
-        return link;
+        return this.http.getAPI('Useraccount') + '/' + username + '/' + password + '/' + token_only;
     }
 
     public getCurrentUser(): any {
@@ -39,6 +31,10 @@ export class Users {
     
     public getUserRole(): number {
         return this.getCurrentUser().securityLevel;
+    }
+
+    public getUserToken(): string {
+        return this.getCurrentUser().lastRowHash;
     }
 
     public getUserFullName() : string {
