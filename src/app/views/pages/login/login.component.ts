@@ -64,11 +64,14 @@ export class LoginComponent {
   generateUserData(username: any = '', password: any = '', user_token: any = '') {
     this.http.getData(this.user.user_api_link(username, password, false)).subscribe(result => { 
       Object.keys(result).forEach(key => {
-        if (result[key]['lastRowHash'] == user_token) {
+        if (result[key]['lastRowHash'] == user_token && result[key]['refreshTokenActive'] === 1) {
           localStorage.setItem("userData", JSON.stringify(result[key]));
           this.invalidLogin = false; 
           this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
           location.replace('/dashboard');
+        }
+        else {
+          this.invalidLogin = true; 
         }
       });
     })
@@ -104,6 +107,10 @@ export class LoginComponent {
           }
         }   
       });
+
+      if (this.invalidLogin) {
+        this.swal.commonSwalCentered('Cannot Validated your Login Credentials!!!', 'warning');
+      }
 
     }
   }

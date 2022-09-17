@@ -9,8 +9,8 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router, public user: Users,  private jwtHelper: JwtHelperService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        
-        if (this.user.getCurrentUser()){
+        const token = localStorage.getItem('jwt');
+        if (this.user.getCurrentUser() && token && this.user.isRefeshTokenActive()){
             return true;
         }
 

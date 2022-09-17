@@ -37,6 +37,10 @@ export class Users {
         return this.getCurrentUser().lastRowHash;
     }
 
+    public isRefeshTokenActive(): boolean {
+        return this.getCurrentUser().refreshTokenActive === 1 ? true : false;
+    }
+
     public getUserFullName() : string {
         const data = this.getCurrentUser();
         return data.lastName + ", " + data.firstName + " " + data.middleInitial;
