@@ -5,6 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
 
+import { RecaptchaModule, RecaptchaSettings, RecaptchaV3Module, RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+
+import { environment} from '../environments/environment';
+
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
@@ -94,6 +98,8 @@ export function tokenGetter() {
     ListGroupModule,
     CardModule,
     MaterialModule,
+    RecaptchaV3Module,
+    RecaptchaModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -110,6 +116,12 @@ export function tokenGetter() {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: {
+        siteKey: environment.siteKey
+      }
     },
     IconSetService,
     Title

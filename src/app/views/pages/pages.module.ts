@@ -10,6 +10,7 @@ import { Page500Component } from './page500/page500.component';
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     GridModule,
     IconModule,
     FormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RecaptchaModule
   ]
 })
 export class PagesModule {

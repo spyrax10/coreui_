@@ -83,7 +83,13 @@
                     </button>
                   </c-col>
                 </c-row>
-                  
+
+                <c-row>
+                  <re-captcha (resolved)="resolved($event)" (error)="onError($event)" errorMode="handled" 
+                    siteKey="{{siteKey}}">
+                  </re-captcha>
+                </c-row>
+
                 <!-- <c-row>
                   <c-col class="text-left" xs="12">
                     <button type="submit" cButton class="px-0" color="link" routerLink="/register">

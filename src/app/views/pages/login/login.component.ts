@@ -6,6 +6,8 @@ import { Users } from '../../../_services/user.service';
 import { ApiHttpService } from 'src/app/_services/api-http.service';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { AuthenticatedResponse, LoginModel } from '../../../_interfaces/login.model';
+import { RecaptchaErrorParameters} from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -22,10 +24,14 @@ export class LoginComponent {
   formErrors: any;
   constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swal: SwalService, public user: Users, 
     public http: ApiHttpService) {
+    this.siteKey = environment.siteKey;
     this.formErrors = this.vf.errorMessages;
     this.createForm();
   }
 
+  reCAPTCHAToken: string = "";
+  siteKey: string = "";
+  tokenVisible: boolean = false;
   credentials: LoginModel = {
     username:'', password:''
   };
@@ -61,6 +67,14 @@ export class LoginComponent {
     return this.simpleForm.status === 'VALID';
   }
 
+  public resolved(captchaResponse: string) {
+    this.reCAPTCHAToken = captchaResponse;
+  }
+
+  public onError(errorDetails: RecaptchaErrorParameters): void {
+    console.log(`reCAPTCHA error encountered; details:`, errorDetails);
+  }
+
   generateUserData(username: any = '', password: any = '', user_token: any = '') {
     this.http.getData(this.user.user_api_link(username, password, false)).subscribe(result => { 
       Object.keys(result).forEach(key => {
@@ -79,39 +93,49 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.onValidate()) {
-      var username = this.simpleForm.value.username;
-      var password = this.simpleForm.value.password;
 
-      this.http.getData(this.user.user_api_link(username, password, true))
-      .subscribe({
-        next: (response: AuthenticatedResponse) => {
-          this.invalidLogin = false; 
-          const token = response.token;
-          localStorage.setItem("jwt", token); 
-          if (token) {
+      if (this.reCAPTCHAToken !== '') {
+        var username = this.simpleForm.value.username;
+        var password = this.simpleForm.value.password;
+  
+        this.http.getData(this.user.user_api_link(username, password, true))
+        .subscribe({
+          next: (response: AuthenticatedResponse) => {
             this.invalidLogin = false; 
-            this.generateUserData(username, password, token);
-          }
-          else {
-            this.swal.commonSwalCentered('Bad Request Has Been Made!!!', 'warning');
-          }
-        },
-        error: (err: HttpErrorResponse) => {
-          this.invalidLogin = true
-          if (err.status == 401) {
-            this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
-          }
-          else {
-            this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'warning');
-            window.location.reload();
-          }
-        }   
-      });
-
-      if (this.invalidLogin) {
-        this.swal.commonSwalCentered('Cannot Validated your Login Credentials!!!', 'warning');
+            const token = response.token;
+            localStorage.setItem("jwt", token); 
+            if (token) {
+              this.invalidLogin = false; 
+              this.generateUserData(username, password, token);
+            }
+            else {
+              this.swal.commonSwalCentered('Bad Request Has Been Made!!!', 'warning');
+            }
+          },
+          error: (err: HttpErrorResponse) => {
+            this.invalidLogin = true
+            if (err.status == 401) {
+              this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
+              this.reCAPTCHAToken = '';
+              grecaptcha.reset();
+            }
+            else {
+              this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'warning');
+              this.reCAPTCHAToken = '';
+              grecaptcha.reset();
+            }
+          }   
+        });
+  
+        if (this.invalidLogin) {
+          this.swal.commonSwalCentered('Cannot Validated your Login Credentials!!!', 'warning');
+          this.reCAPTCHAToken = '';
+          grecaptcha.reset();
+        }
+      } 
+      else {
+        this.swal.commonSwalCentered('Please Resolved Recaptcha!!!', 'warning');
       }
-
     }
   }
 }
