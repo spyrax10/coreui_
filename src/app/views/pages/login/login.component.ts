@@ -94,7 +94,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.onValidate()) {
 
-      if (this.reCAPTCHAToken !== '') {
+      //if (this.reCAPTCHAToken !== '') {
         var username = this.simpleForm.value.username;
         var password = this.simpleForm.value.password;
   
@@ -132,10 +132,10 @@ export class LoginComponent {
           this.reCAPTCHAToken = '';
           grecaptcha.reset();
         }
-      } 
-      else {
-        this.swal.commonSwalCentered('Please Resolved Recaptcha!!!', 'warning');
-      }
+      // } 
+      // else {
+      //   this.swal.commonSwalCentered('Please Resolved Recaptcha!!!', 'warning');
+      // }
     }
   }
 }

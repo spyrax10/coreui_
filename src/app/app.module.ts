@@ -7,7 +7,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 
 import { RecaptchaModule, RecaptchaSettings, RecaptchaV3Module, RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 
-import { environment} from '../environments/environment';
+import { Auth0, environment} from '../environments/environment';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -21,7 +21,8 @@ import { MaterialModule } from './material.module';
 
 // Import app component
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 
 // Import containers
 import {
@@ -106,7 +107,28 @@ export function tokenGetter() {
         allowedDomains: ["localhost:44382"],
         disallowedRoutes: []
       }
-    })
+    }),
+    AuthModule.forRoot({
+      // The domain and clientId were configured in the previous chapter
+      domain: Auth0.domain,
+      clientId: Auth0.clientID,
+      secret: Auth0.secret,
+
+      // Request this audience at user authentication time
+      audience: Auth0.audience,
+
+      // Specify configuration for the interceptor              
+      httpInterceptor: {
+        allowedList: [{
+            // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
+            uri: Auth0.domain + Auth0.userAPI + "*",
+            tokenOptions: {
+            // The attached token should target this audience
+            audience: Auth0.audience
+          }
+        }]
+        }
+      })
   ],
   providers: [
     {
@@ -123,6 +145,7 @@ export function tokenGetter() {
         siteKey: environment.siteKey
       }
     },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     IconSetService,
     Title
   ],
