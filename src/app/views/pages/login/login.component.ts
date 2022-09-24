@@ -8,6 +8,7 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { AuthenticatedResponse, LoginModel } from '../../../_interfaces/login.model';
 import { RecaptchaErrorParameters} from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,13 @@ export class LoginComponent {
   invalidLogin: boolean = false;
   submitted = false;
   formErrors: any;
+  user2: any;
   constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swal: SwalService, public user: Users, 
-    public http: ApiHttpService) {
+    public http: ApiHttpService, private authService: AuthService) {
     this.siteKey = environment.siteKey;
     this.formErrors = this.vf.errorMessages;
     this.createForm();
+    this.user2 = {};
   }
 
   reCAPTCHAToken: string = "";

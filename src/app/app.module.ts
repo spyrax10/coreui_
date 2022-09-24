@@ -108,27 +108,7 @@ export function tokenGetter() {
         disallowedRoutes: []
       }
     }),
-    AuthModule.forRoot({
-      // The domain and clientId were configured in the previous chapter
-      domain: Auth0.domain,
-      clientId: Auth0.clientID,
-      secret: Auth0.secret,
-
-      // Request this audience at user authentication time
-      audience: Auth0.audience,
-
-      // Specify configuration for the interceptor              
-      httpInterceptor: {
-        allowedList: [{
-            // Match any request that starts 'https://YOUR_DOMAIN/api/v2/' (note the asterisk)
-            uri: Auth0.domain + Auth0.userAPI + "*",
-            tokenOptions: {
-            // The attached token should target this audience
-            audience: Auth0.audience
-          }
-        }]
-        }
-      })
+    AuthModule.forRoot(Auth0)
   ],
   providers: [
     {
