@@ -9,10 +9,10 @@ export const environment = {
 
 export const Auth0 = {
   domain: "https://dev-uu90k3ra.jp.auth0.com/",
-  audience: "https://localhost",
-  clientId: "hvvoWotutkxTOBo66IbREIoOF9RqtdG0",
-  secret: "btAt79G07h-SWoDZxtfPmumlOOUHaWky5vUC4r7JfNQZ9PRrIgbMXLjed3OLEaDR",
-  redirectUri: "https://dev-uu90k3ra.jp.auth0.com/authorize?",
+  audience: "http://localhost",
+  clientId: "IyieS3u6azmc2f9dfUgtrZOykz6547cw",
+  secret: "qUhRxeVXL_jm3D27NcaJLGWysESPoXgReepSTRsx0SkPJuwfPXxnkEmHBRvbhSBs",
+  redirectUri: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost",
   issuer: "https://dev-uu90k3ra.jp.auth0.com/"
   //userAPI: "https://localhost:44382/api/Useraccount/",
 }
