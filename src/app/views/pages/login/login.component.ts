@@ -94,47 +94,60 @@ export class LoginComponent {
     })
   }
 
+  auth0loginRedirect(): void {
+    this.authService.loginWithPopup();
+  }
+
   onSubmit() {
     if (this.onValidate()) {
 
+      this.auth0loginRedirect();
+
+      if (this.authService.isAuthenticated$) {
+        console.log("Authenticated");
+      }
+      else {
+        console.log("Get Out!!!");
+      }
+    
       //if (this.reCAPTCHAToken !== '') {
-        var username = this.simpleForm.value.username;
-        var password = this.simpleForm.value.password;
+        // var username = this.simpleForm.value.username;
+        // var password = this.simpleForm.value.password;
   
-        this.http.getData(this.user.user_api_link(username, password, true))
-        .subscribe({
-          next: (response: AuthenticatedResponse) => {
-            this.invalidLogin = false; 
-            const token = response.token;
-            localStorage.setItem("jwt", token); 
-            if (token) {
-              this.invalidLogin = false; 
-              this.generateUserData(username, password, token);
-            }
-            else {
-              this.swal.commonSwalCentered('Bad Request Has Been Made!!!', 'warning');
-            }
-          },
-          error: (err: HttpErrorResponse) => {
-            this.invalidLogin = true
-            if (err.status == 401) {
-              this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
-              this.reCAPTCHAToken = '';
-              grecaptcha.reset();
-            }
-            else {
-              this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'warning');
-              this.reCAPTCHAToken = '';
-              grecaptcha.reset();
-            }
-          }   
-        });
+        // this.http.getData(this.user.user_api_link(username, password, true))
+        // .subscribe({
+        //   next: (response: AuthenticatedResponse) => {
+        //     this.invalidLogin = false; 
+        //     const token = response.token;
+        //     localStorage.setItem("jwt", token); 
+        //     if (token) {
+        //       this.invalidLogin = false; 
+        //       this.generateUserData(username, password, token);
+        //     }
+        //     else {
+        //       this.swal.commonSwalCentered('Bad Request Has Been Made!!!', 'warning');
+        //     }
+        //   },
+        //   error: (err: HttpErrorResponse) => {
+        //     this.invalidLogin = true
+        //     if (err.status == 401) {
+        //       this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
+        //       this.reCAPTCHAToken = '';
+        //       grecaptcha.reset();
+        //     }
+        //     else {
+        //       this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'warning');
+        //       this.reCAPTCHAToken = '';
+        //       grecaptcha.reset();
+        //     }
+        //   }   
+        // });
   
-        if (this.invalidLogin) {
-          this.swal.commonSwalCentered('Cannot Validated your Login Credentials!!!', 'warning');
-          this.reCAPTCHAToken = '';
-          grecaptcha.reset();
-        }
+        // if (this.invalidLogin) {
+        //   this.swal.commonSwalCentered('Cannot Validated your Login Credentials!!!', 'warning');
+        //   this.reCAPTCHAToken = '';
+        //   grecaptcha.reset();
+        // }
       // } 
       // else {
       //   this.swal.commonSwalCentered('Please Resolved Recaptcha!!!', 'warning');

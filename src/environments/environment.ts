@@ -8,12 +8,17 @@ export const environment = {
 };
 
 export const Auth0 = {
-  domain: "https://dev-uu90k3ra.jp.auth0.com/",
-  audience: "http://localhost",
-  clientId: "IyieS3u6azmc2f9dfUgtrZOykz6547cw",
-  secret: "qUhRxeVXL_jm3D27NcaJLGWysESPoXgReepSTRsx0SkPJuwfPXxnkEmHBRvbhSBs",
-  redirectUri: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost",
-  issuer: "https://dev-uu90k3ra.jp.auth0.com/"
+  domain: 'dev-uu90k3ra.jp.auth0.com',
+  audience: 'https://pos_auth0.com',
+  clientId: '6i7yXc3eP5NoKPIljysQouDGSex6Az9z',
+  client_secret: 'B70QlHhjQFRdXepf0GDFKW3D8mVCl_AoVR9qqwVNQseMTfuyDuOyPUFcBZv0QcXk',
+  token_endpoint: 'https://dev-uu90k3ra.jp.auth0.com/oauth/token',
+  grant_type: 'client_credentials',
+  redirectUri: window.location.origin
+  //redirectUrl: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost:4200"
+  //redirectUri: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost:4200",
+  //issuer: "https://dev-uu90k3ra.jp.auth0.com/",
+  //app_id: "63352e3e8f667525d5d496f3"
   //userAPI: "https://localhost:44382/api/Useraccount/",
 }
 /*
