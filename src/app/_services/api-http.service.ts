@@ -17,9 +17,11 @@ constructor( private http: HttpClient, public swalService: SwalService ) {
     this.headers.set('Accept', 'application/json');
  } 
 
-    public getData(api: any = '') {
+    public getData(api: any = '', token: any = '') {
         return this.http.get<any>(api, {
-            headers: this.headers
+            headers: {
+                Authorization: 'Bearer ' + token
+            } 
         });
     }
 

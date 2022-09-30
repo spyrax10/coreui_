@@ -10,11 +10,11 @@ export const environment = {
 export const Auth0 = {
   domain: 'dev-uu90k3ra.jp.auth0.com',
   audience: 'https://pos_auth0.com',
-  clientId: '6i7yXc3eP5NoKPIljysQouDGSex6Az9z',
-  client_secret: 'B70QlHhjQFRdXepf0GDFKW3D8mVCl_AoVR9qqwVNQseMTfuyDuOyPUFcBZv0QcXk',
+  clientId: 'aFS0DOIcOS3VozcJkTRPFZzsB6yOk8si',
+  client_secret: 'KooVXrL4KueXf7P5gX3hlIRIxUbVLg6QPCOSku_JRtDC07LySWa_J8IgfKp3szuZ',
   token_endpoint: 'https://dev-uu90k3ra.jp.auth0.com/oauth/token',
-  grant_type: 'client_credentials',
-  redirectUri: window.location.origin
+  grant_type: 'authorization_code'
+  //redirectUri: window.location.origin
   //redirectUrl: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost:4200"
   //redirectUri: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost:4200",
   //issuer: "https://dev-uu90k3ra.jp.auth0.com/",

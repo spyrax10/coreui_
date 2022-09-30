@@ -2,6 +2,7 @@ import { Component, Input} from '@angular/core';
 import { SwalService } from '../../../_services/swal-service';
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { Users } from '../../../_services/user.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-default-header',
@@ -18,10 +19,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
   user_fullName = '';
   user_role: number = 0;
 
-  constructor(private classToggler: ClassToggleService, public swalService: SwalService, public user: Users) {
+  constructor(private classToggler: ClassToggleService, public swalService: SwalService, public user: Users, private authService: AuthService) {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
+    console.log(this.user.getUserFullName())
   }
   
   logOut() {

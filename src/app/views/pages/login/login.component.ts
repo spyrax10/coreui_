@@ -9,6 +9,7 @@ import { AuthenticatedResponse, LoginModel } from '../../../_interfaces/login.mo
 import { RecaptchaErrorParameters} from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '@auth0/auth0-angular';
+import { async, first, iif } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
 
   simpleForm!: FormGroup;
   user_cre: any = [];
-  invalidLogin: boolean = false;
+  invalidLogin: boolean = true;
   submitted = false;
   formErrors: any;
   user2: any;
@@ -34,6 +35,7 @@ export class LoginComponent {
 
   reCAPTCHAToken: string = "";
   siteKey: string = "";
+  accessToken: any;
   tokenVisible: boolean = false;
   credentials: LoginModel = {
     username:'', password:''
@@ -78,77 +80,40 @@ export class LoginComponent {
     console.log(`reCAPTCHA error encountered; details:`, errorDetails);
   }
 
-  generateUserData(username: any = '', password: any = '', user_token: any = '') {
-    this.http.getData(this.user.user_api_link(username, password, false)).subscribe(result => { 
-      Object.keys(result).forEach(key => {
-        if (result[key]['lastRowHash'] == user_token && result[key]['refreshTokenActive'] === 1) {
-          localStorage.setItem("userData", JSON.stringify(result[key]));
-          this.invalidLogin = false; 
-          this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
-          location.replace('/dashboard');
-        }
-        else {
-          this.invalidLogin = true; 
-        }
-      });
-    })
-  }
-
-  auth0loginRedirect(): void {
-    this.authService.loginWithPopup();
-  }
-
   onSubmit() {
+    const usePopup = true;
+    const ignoreCache = true;
+
     if (this.onValidate()) {
+      var username = this.simpleForm.value.username;
+      var password = this.simpleForm.value.password;
 
-      this.auth0loginRedirect();
-
-      if (this.authService.isAuthenticated$) {
-        console.log("Authenticated");
-      }
-      else {
-        console.log("Get Out!!!");
-      }
-    
-      //if (this.reCAPTCHAToken !== '') {
-        // var username = this.simpleForm.value.username;
-        // var password = this.simpleForm.value.password;
-  
-        // this.http.getData(this.user.user_api_link(username, password, true))
-        // .subscribe({
-        //   next: (response: AuthenticatedResponse) => {
-        //     this.invalidLogin = false; 
-        //     const token = response.token;
-        //     localStorage.setItem("jwt", token); 
-        //     if (token) {
-        //       this.invalidLogin = false; 
-        //       this.generateUserData(username, password, token);
-        //     }
-        //     else {
-        //       this.swal.commonSwalCentered('Bad Request Has Been Made!!!', 'warning');
-        //     }
-        //   },
-        //   error: (err: HttpErrorResponse) => {
-        //     this.invalidLogin = true
-        //     if (err.status == 401) {
-        //       this.swal.commonSwalCentered('Incorrect Credentials!!!', 'error');  
-        //       this.reCAPTCHAToken = '';
-        //       grecaptcha.reset();
-        //     }
-        //     else {
-        //       this.swal.commonSwalCentered('Cannot Connect to Server!!!', 'warning');
-        //       this.reCAPTCHAToken = '';
-        //       grecaptcha.reset();
-        //     }
-        //   }   
-        // });
-  
-        // if (this.invalidLogin) {
-        //   this.swal.commonSwalCentered('Cannot Validated your Login Credentials!!!', 'warning');
-        //   this.reCAPTCHAToken = '';
-        //   grecaptcha.reset();
-        // }
-      // } 
+      // if (this.reCAPTCHAToken !== '') {
+        iif(() => usePopup, this.authService.getAccessTokenWithPopup(),
+          this.authService.getAccessTokenSilently({ ignoreCache })).pipe(first()).subscribe((token) => {
+          if (token) {
+            this.http.getData(this.user.user_api_link(username, password, false), token).subscribe(result => {
+              Object.keys(result).forEach(key => {
+                this.invalidLogin = false; 
+                localStorage.setItem("userData", JSON.stringify(result[key]));
+                this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
+                location.replace('/dashboard');
+              });
+            }, error => {
+              this.invalidLogin = true; 
+              this.swal.commonSwalCentered('Cannot validated YOU this time!', 'error');  
+              this.reCAPTCHAToken = '';
+              grecaptcha.reset();
+            });
+          }
+          else {
+            this.invalidLogin = true; 
+            this.swal.commonSwalCentered('You Are Not Authorized!', 'error');  
+            this.reCAPTCHAToken = '';
+            grecaptcha.reset();
+          }
+        });
+      //}
       // else {
       //   this.swal.commonSwalCentered('Please Resolved Recaptcha!!!', 'warning');
       // }
