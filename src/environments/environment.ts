@@ -14,12 +14,6 @@ export const Auth0 = {
   client_secret: 'KooVXrL4KueXf7P5gX3hlIRIxUbVLg6QPCOSku_JRtDC07LySWa_J8IgfKp3szuZ',
   token_endpoint: 'https://dev-uu90k3ra.jp.auth0.com/oauth/token',
   grant_type: 'authorization_code'
-  //redirectUri: window.location.origin
-  //redirectUrl: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost:4200"
-  //redirectUri: "https://dev-uu90k3ra.jp.auth0.com/authorize?http://localhost:4200",
-  //issuer: "https://dev-uu90k3ra.jp.auth0.com/",
-  //app_id: "63352e3e8f667525d5d496f3"
-  //userAPI: "https://localhost:44382/api/Useraccount/",
 }
 /*
  * For easier debugging in development mode, you can import the following file

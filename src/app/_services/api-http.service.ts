@@ -7,14 +7,9 @@ import { Constants } from '../_config/constant';
     providedIn: 'root'
 })
   
-export class ApiHttpService { 
-    serverUri = 'https://localhost:44382/api/Useraccount/';
-
-    headers: HttpHeaders = new HttpHeaders();
+export class ApiHttpService {
     
 constructor( private http: HttpClient, public swalService: SwalService ) {
-    this.headers.set('Content-Type','application/json');
-    this.headers.set('Accept', 'application/json');
  } 
 
     public getData(api: any = '', token: any = '') {
