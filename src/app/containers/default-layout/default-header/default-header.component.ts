@@ -3,6 +3,7 @@ import { SwalService } from '../../../_services/swal-service';
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { Users } from '../../../_services/user.service';
 import { AuthService } from '@auth0/auth0-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-default-header',
@@ -19,7 +20,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
   user_fullName = '';
   user_role: number = 0;
 
-  constructor(private classToggler: ClassToggleService, public swalService: SwalService, public user: Users, private authService: AuthService) {
+  constructor(private classToggler: ClassToggleService, public swalService: SwalService, public user: Users, private authService: AuthService,
+    private router: Router) {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
@@ -38,7 +40,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   routeOut() {
     localStorage.removeItem('userData');
-    localStorage.removeItem("jwt");
+    //localStorage.removeItem("jwt");
+    //this.authService.logout();
     location.replace('/login');
   }
 }

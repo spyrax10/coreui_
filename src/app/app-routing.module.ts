@@ -10,11 +10,9 @@ import { ForgotComponent } from './views/pages/forgot/forgot.component';
 
 import { AuthGuard } from './_guards/auth.guard';
 
-let redirect = JSON.parse(localStorage.getItem('userData')) !== null ? 'dashboard' : 'login'; 
-
 const routes: Routes = [
 
-  {path: '', redirectTo: redirect, pathMatch: 'full'},
+  {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   
   {
     path: '',

@@ -91,7 +91,7 @@ export class LoginComponent {
       // if (this.reCAPTCHAToken !== '') {
         iif(() => usePopup, this.authService.getAccessTokenWithPopup(),
           this.authService.getAccessTokenSilently({ ignoreCache })).pipe(first()).subscribe((token) => {
-          if (token) {
+          if (token && this.authService.isAuthenticated$) {
             this.http.getData(this.user.user_api_link(username, password, false), token).subscribe(result => {
               Object.keys(result).forEach(key => {
                 this.invalidLogin = false; 
