@@ -106,12 +106,11 @@ export class LoginComponent {
               grecaptcha.reset();
             });
           }
-          else {
-            this.invalidLogin = true; 
-            this.swal.commonSwalCentered('You Are Not Authorized!', 'error');  
-            this.reCAPTCHAToken = '';
-            grecaptcha.reset();
-          }
+        }, error => {
+          this.invalidLogin = true; 
+          this.swal.commonSwalCentered('You Are Not Authorized!', 'error'); 
+          this.reCAPTCHAToken = '';
+          grecaptcha.reset();
         });
       //}
       // else {
