@@ -11,9 +11,10 @@ export const Auth0 = {
   domain: 'dev-uu90k3ra.jp.auth0.com',
   audience: 'https://pos_auth0.com',
   clientId: 'aFS0DOIcOS3VozcJkTRPFZzsB6yOk8si',
-  client_secret: 'KooVXrL4KueXf7P5gX3hlIRIxUbVLg6QPCOSku_JRtDC07LySWa_J8IgfKp3szuZ',
   token_endpoint: 'https://dev-uu90k3ra.jp.auth0.com/oauth/token',
-  grant_type: 'authorization_code'
+  grant_type: 'authorization_code',
+  useRefreshTokens: true,
+  CacheLocation: 'localstorage'
 }
 /*
  * For easier debugging in development mode, you can import the following file

@@ -25,7 +25,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
-    console.log(this.user.getUserFullName())
   }
   
   logOut() {
@@ -41,7 +40,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   routeOut() {
     localStorage.removeItem('userData');
     //localStorage.removeItem("jwt");
-    //this.authService.logout();
     location.replace('/login');
+    //this.authService.logout({ returnTo: document.location.origin })
   }
 }
