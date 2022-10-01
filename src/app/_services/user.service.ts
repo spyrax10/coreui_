@@ -8,8 +8,8 @@ export class Users {
     constructor(public http: ApiHttpService, public swal: SwalService) {
     }
     
-    public user_api_link(username: any = '', password: any = '', token_only: boolean = false) {
-        return this.http.getAPI('Useraccount') + '/' + username + '/' + password + '/' + token_only;
+    public user_api_link(username: any = '', password: any = '') {
+        return this.http.getAPI('Useraccount') + '/' + username + '/' + password;
     }
 
     public getCurrentUser(): any {

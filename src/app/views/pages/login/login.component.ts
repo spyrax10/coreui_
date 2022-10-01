@@ -85,7 +85,8 @@ export class LoginComponent {
         iif(() => usePopup, this.authService.getAccessTokenWithPopup(),
           this.authService.getAccessTokenSilently({ ignoreCache })).pipe(first()).subscribe((token) => {
           if (token && this.authService.isAuthenticated$) {
-            this.http.getData(this.user.user_api_link(username, password, false), token).subscribe(result => {
+            this.swal.swalLoading("Logging In... Please Wait...");
+            this.http.getData(this.user.user_api_link(username, password), token).subscribe(result => {
               Object.keys(result).forEach(key => {
                 this.invalidLogin = false; 
                 this.new_token.set_accessToken(token);

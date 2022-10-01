@@ -58,4 +58,17 @@ export class SwalService {
             } 
         });
     }
+
+    public swalLoading(msg: string = '') {
+        Swal.fire({
+            title: msg,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen() {
+                Swal.showLoading()
+            },
+            
+        });
+    }
 }
