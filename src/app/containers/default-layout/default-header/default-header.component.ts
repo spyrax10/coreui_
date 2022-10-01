@@ -1,9 +1,9 @@
 import { Component, Input} from '@angular/core';
 import { SwalService } from '../../../_services/swal-service';
-import { ClassToggleService, HeaderComponent } from '@coreui/angular';
+import { HeaderComponent } from '@coreui/angular';
 import { Users } from '../../../_services/user.service';
 import { AuthService } from '@auth0/auth0-angular';
-import { Router } from '@angular/router';
+import { TokenModel } from '../../../_interfaces/token.model';
 
 @Component({
   selector: 'app-default-header',
@@ -13,18 +13,21 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   @Input() sidebarId: string = "sidebar";
 
-  public newMessages = new Array(4)
-  public newTasks = new Array(5)
-  public newNotifications = new Array(5)
-  public user_data: any = [];
   user_fullName = '';
   user_role: number = 0;
 
-  constructor(private classToggler: ClassToggleService, public swalService: SwalService, public user: Users, private authService: AuthService,
-    private router: Router) {
+  constructor(public swalService: SwalService, public user: Users, private authService: AuthService,
+    public new_token: TokenModel) {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
+
+    if (this.authService.isAuthenticated$) {
+      console.log("Authorized");
+    }
+    else {
+      console.log("Get Out");
+    }
   }
   
   logOut() {
