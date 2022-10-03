@@ -21,6 +21,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
+    
+    console.log(this.new_token.get_accessToken());
 
     if (this.authService.isAuthenticated$) {
       console.log("Authorized");
@@ -32,18 +34,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
   
   logOut() {
     this.swalService.centeredConfirm(
-      this.routeOut, 
+      true, '', 
       "Logout Confirmation",
       "Are you sure to Logout?",
       "warning", false, false, true,
       "Yes, I want to logout", "No, I want to stay!"
     );
-  }
-
-  routeOut() {
-    localStorage.removeItem('userData');
-    //localStorage.removeItem("jwt");
-    location.replace('/login');
-    //this.authService.logout({ returnTo: document.location.origin })
   }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import { AuthService } from '@auth0/auth0-angular';
+import { cibWindows } from '@coreui/icons';
 
 
 const toast_end = Swal.mixin({
@@ -24,7 +26,7 @@ const toast_centered = Swal.mixin({
 
 export class SwalService {
     
-    constructor() { }
+    constructor(private authService: AuthService) { }
 
     public commonSwalEnd(msg: string = '', icon: any = '') {
         toast_end.fire({
@@ -40,7 +42,7 @@ export class SwalService {
         });
     }
 
-    public centeredConfirm(callback: any, title: string = '', text: string = '', icon: any = '', 
+    public centeredConfirm(logOut: boolean = false, callback: any, title: string = '', text: string = '', icon: any = '', 
     allowEscapeKey: boolean = false, allowOutsideClick: boolean = false, showCancelButton: boolean = false,
     confirmButtonText: string = 'OK', cancelButtonText: string = 'Cancel') { 
         Swal.fire({
@@ -54,8 +56,14 @@ export class SwalService {
             cancelButtonText: cancelButtonText
         }).then((response: any) => {
             if (response.value) {
-                callback();
-            } 
+                if (logOut) {
+                    localStorage.removeItem('userData');
+                    this.authService.logout({returnTo: window.location.origin});
+                }
+                else {
+                    callback();
+                }
+            }
         });
     }
 
