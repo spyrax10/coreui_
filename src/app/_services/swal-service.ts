@@ -57,6 +57,7 @@ export class SwalService {
         }).then((response: any) => {
             if (response.value) {
                 if (logOut) {
+                    localStorage.removeItem('aToken');
                     localStorage.removeItem('userData');
                     this.authService.logout({returnTo: window.location.origin});
                 }

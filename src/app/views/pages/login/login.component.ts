@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalService } from '../../../_services/swal-service';
 import { Users } from '../../../_services/user.service';
 import { ApiHttpService } from 'src/app/_services/api-http.service';
-import { TokenModel } from '../../../_interfaces/token.model';
 import { RecaptchaErrorParameters} from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '@auth0/auth0-angular';
@@ -24,7 +23,7 @@ export class LoginComponent {
   formErrors: any;
   user2: any;
   constructor(private fb: FormBuilder, public vf: ValidationFormsService, public swal: SwalService, public user: Users, 
-    public http: ApiHttpService, private authService: AuthService, public new_token: TokenModel) {
+    public http: ApiHttpService, private authService: AuthService) {
     this.siteKey = environment.siteKey;
     this.formErrors = this.vf.errorMessages;
     this.createForm();
@@ -78,35 +77,46 @@ export class LoginComponent {
     const ignoreCache = true;
 
     if (this.onValidate()) {
-      var username = this.simpleForm.value.username;
-      var password = this.simpleForm.value.password;
+      let username = this.simpleForm.value.username;
+      let password = this.simpleForm.value.password;
+      let email = "";
 
       // if (this.reCAPTCHAToken !== '') {
         iif(() => usePopup, this.authService.getAccessTokenWithPopup(),
           this.authService.getAccessTokenSilently({ ignoreCache })).pipe(first()).subscribe((token) => {
-          if (token && this.authService.isAuthenticated$) {
             this.swal.swalLoading("Logging In... Please Wait...");
-            this.http.getData(this.user.user_api_link(username, password), token).subscribe(result => {
-              Object.keys(result).forEach(key => {
-                this.invalidLogin = false; 
-                this.new_token.set_accessToken(token);
-                //localStorage.setItem("aToken", token);
-                localStorage.setItem("userData", JSON.stringify(result[key]));
-                this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
-                location.replace('/dashboard');
-              });
-            }, error => {
-              this.invalidLogin = true; 
-              this.swal.commonSwalCentered('Cannot validated YOU this time!', 'error');  
-              this.reCAPTCHAToken = '';
-              grecaptcha.reset();
+            this.authService.getUser().pipe(first()).subscribe((user) => {
+              email = user.email;
             });
+
+            if (token && this.authService.isAuthenticated$) {
+              localStorage.setItem("aToken", token);
+              this.http.getData(this.user.user_api_link(username, password)).subscribe(result => {
+                Object.keys(result).forEach(key => {
+                  if (result[key]['mailingAddress'] === email) {
+                    this.invalidLogin = false; 
+                    localStorage.setItem("userData", JSON.stringify(result[key]));
+                    this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
+                    location.replace('/dashboard');
+                  }
+                  else {
+                    this.invalidLogin = true; 
+                    this.swal.commonSwalCentered('Invalid User Account!', 'error');
+                  }
+                });
+              }, error => {
+                this.invalidLogin = true; 
+                this.swal.commonSwalCentered('Cannot validated YOU this time!', 'error');  
+                this.reCAPTCHAToken = '';
+                //grecaptcha.reset();
+              }
+            );
           }
         }, error => {
           this.invalidLogin = true; 
           this.swal.commonSwalCentered('You Are Not Authorized!', 'error'); 
           this.reCAPTCHAToken = '';
-          grecaptcha.reset();
+          //grecaptcha.reset();
         });
       //}
       // else {

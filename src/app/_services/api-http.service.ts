@@ -9,13 +9,11 @@ import { Constants } from '../_config/constant';
   
 export class ApiHttpService {
     
-constructor( private http: HttpClient, public swalService: SwalService ) {
- } 
-
-    public getData(api: any = '', token: any = '') {
+constructor( private http: HttpClient, public swalService: SwalService ) {} 
+    public getData(api: any = '') {
         return this.http.get<any>(api, {
             headers: {
-                Authorization: 'Bearer ' + token
+                Authorization: 'Bearer ' + localStorage.getItem("aToken")
             } 
         });
     }
@@ -23,5 +21,4 @@ constructor( private http: HttpClient, public swalService: SwalService ) {
     public getAPI(module: string = '') {
         return Constants.API_ENDPOINT + "api/" + module;
     }
-
 }

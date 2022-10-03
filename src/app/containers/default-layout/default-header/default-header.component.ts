@@ -3,7 +3,6 @@ import { SwalService } from '../../../_services/swal-service';
 import { HeaderComponent } from '@coreui/angular';
 import { Users } from '../../../_services/user.service';
 import { AuthService } from '@auth0/auth0-angular';
-import { TokenModel } from '../../../_interfaces/token.model';
 
 @Component({
   selector: 'app-default-header',
@@ -16,14 +15,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
   user_fullName = '';
   user_role: number = 0;
 
-  constructor(public swalService: SwalService, public user: Users, private authService: AuthService,
-    public new_token: TokenModel) {
+  constructor(public swalService: SwalService, public user: Users, private authService: AuthService) {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
     
-    console.log(this.new_token.get_accessToken());
-
     if (this.authService.isAuthenticated$) {
       console.log("Authorized");
     }

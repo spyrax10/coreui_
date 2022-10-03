@@ -1,16 +1,8 @@
 import { Injectable } from "@angular/core";
 
-@Injectable({ providedIn: 'root' })
+@Injectable() 
 
 export class TokenModel {
 
-    constructor() {}
-    private access_token: string;
-
-    public get_accessToken(): string {
-        return this.access_token;
-    }
-    public set_accessToken(value: string) {
-        this.access_token = value;
-    }
+    public static access_token: string = "";
 }
