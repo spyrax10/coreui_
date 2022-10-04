@@ -3,6 +3,9 @@ import { SwalService } from '../../../_services/swal-service';
 import { HeaderComponent } from '@coreui/angular';
 import { Users } from '../../../_services/user.service';
 import { AuthService } from '@auth0/auth0-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-default-header',
@@ -10,12 +13,21 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class DefaultHeaderComponent extends HeaderComponent {
 
+  registerForm: FormGroup = this.fb.group({
+    firstName: ['', [Validators.required]],
+    middlename: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    username: ['', [Validators.required, Validators.minLength(6)]]
+  });
+
   @Input() sidebarId: string = "sidebar";
 
   user_fullName = '';
   user_role: number = 0;
 
-  constructor(public swalService: SwalService, public user: Users, private authService: AuthService) {
+  constructor(public swalService: SwalService, public user: Users, private authService: AuthService, 
+    private fb: FormBuilder) {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
@@ -27,7 +39,37 @@ export class DefaultHeaderComponent extends HeaderComponent {
       console.log("Get Out");
     }
   }
-  
+
+  get firstName(): any {
+    return this.registerForm.get('firstName');
+  }
+
+  get middlename(): any {
+    return this.registerForm.get('middlename');
+  }
+  get lastName(): any {
+    return this.registerForm.get('lastName');
+  }
+  get email(): any {
+    return this.registerForm.get('email');
+  }
+  get username(): any {
+    return this.registerForm.get('username');
+  }
+
+  public showModal() {
+    $("#loginModal").toggle("slow");
+  }
+  public closeModal() {
+    $("#loginModal").hide("slow");
+  }
+
+  registerFormSubmit(): void {
+    const formData = this.registerForm.value;
+    console.log(formData);
+    // Api Request Here
+  }
+
   logOut() {
     this.swalService.centeredConfirm(
       true, '', 

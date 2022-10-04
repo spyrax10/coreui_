@@ -55,13 +55,9 @@
 <!-- Side User Menu -->
 <ng-template #userDropdown>
   <c-dropdown alignment="end" variant="nav-item">
-    <button
-      cButton
-      color=""
-      [caret]="false"
-      cDropdownToggle
-      class="py-0"
-    >
+
+    <button cButton color="" [caret]="false" cDropdownToggle class="py-0">
+
       <c-avatar
         cTextColor="primary"
         shape="rounded-1"
@@ -95,7 +91,10 @@
 
       <li>
         <div *ngIf="user_role == 1">
-          <a [routerLink]="[]" (click)="logOut()" cDropdownItem>
+          <!-- <button type="button" class="btn btn-info px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Registration Now
+          </button> -->
+          <a [routerLink]="[]" (click)="showModal()" cDropdownItem>
             <svg cIcon class="me-2" name="cilPlus"></svg>
             Add New User
           </a>
@@ -113,4 +112,58 @@
     </ul>
   </c-dropdown>
 </ng-template>
-<!-- Side User Menu -->
+
+<!-- Modal -->
+
+<div class="modal" id="loginModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Registration Form</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm" novalidate (ngSubmit)="registerFormSubmit()" class="row g-3">
+          <div class="col-md-8">
+            <label for="id_email" class="form-label">Email address</label>
+            <input formControlName="email" [class.is-invalid]="email.touched && email.invalid" type="email"
+              class="form-control" id="id_email">
+            <div *ngIf="email.invalid && email.touched">
+              <div *ngIf="email.errors?.required" class="d-block invalid-feedback">Please
+                provide a Email.</div>
+              <div *ngIf="email.errors?.email" class="d-block invalid-feedback">Email address is not valid</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="id_username" class="form-label">Username</label>
+            <input formControlName="username" [class.is-invalid]="username.touched && username.invalid"
+              type="text" class="form-control" id="id_username">
+            <div *ngIf="username.touched && username.errors?.required" class="d-block invalid-feedback">Provide your username.</div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="id_firstName" class="form-label">First name</label>
+            <input formControlName="firstName" type="text" class="form-control" id="id_firstName" required>
+            <div *ngIf="firstName.touched && firstName.errors?.required" class="d-block invalid-feedback">Provide your First Name.</div>
+          </div>
+          <div class="col-md-4">
+            <label for="id_middlename" class="form-label">Middle Name</label>
+            <input formControlName="middlename" type="text" class="form-control" id="id_middlename" required>
+            <div *ngIf="middlename.touched && middlename.errors?.required" class="d-block invalid-feedback">Provide your Middle Name.</div>
+          </div>
+          <div class="col-md-4">
+            <label for="id_lastName" class="form-label">Last name</label>
+            <input type="text" class="form-control" formControlName="lastName" id="id_lastName" required>
+            <div *ngIf="lastName.touched && lastName.errors?.required" class="d-block invalid-feedback">Provide your Last Name.</div>
+          </div>
+
+          <div class="col-md-6 mt-4">
+            <button type="submit" class="btn btn-primary px-5">Submit</button>
+            <button type="button" (click)="closeModal()" class="btn btn-secondary px-3 ms-2">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

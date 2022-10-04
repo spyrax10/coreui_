@@ -44,6 +44,7 @@ import {
   GridModule,
   HeaderModule,
   ListGroupModule,
+  ModalModule,
   NavModule,
   ProgressModule,
   SharedModule,
@@ -101,6 +102,7 @@ export function tokenGetter() {
     MaterialModule,
     RecaptchaV3Module,
     RecaptchaModule,
+    ModalModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

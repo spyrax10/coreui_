@@ -76,8 +76,26 @@ export class SwalService {
             showConfirmButton: false,
             didOpen() {
                 Swal.showLoading()
-            },
-            
+            }
         });
+    }
+
+    public swalRegForm() {
+        Swal.fire({
+            focusConfirm: false,
+            allowOutsideClick: false,
+            showCloseButton: true,
+            html:
+            '<div class="swalReg">' +
+            '<input id="fname" class="swal2-input" placeholder="Firstname">' +
+            '<input id="mname" class="swal2-input" placeholder="Middlename">' +
+            '<input id="lname" class="swal2-input" placeholder="Lastname">' +
+            '<input id="email" type="email" class="swal2-input" placeholder="Email Address">' + 
+            '</div>',
+            confirmButtonColor: '#3085d6',
+            //customClass: 'swalReg',
+            confirmButtonText: 'Register New User'
+
+        })
     }
 }
