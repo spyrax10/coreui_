@@ -18,7 +18,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
     middlename: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    username: ['', [Validators.required, Validators.minLength(6)]]
+    //username: ['', [Validators.required, Validators.minLength(6)]],
+    userLevel: ['']
   });
 
   @Input() sidebarId: string = "sidebar";
@@ -53,15 +54,25 @@ export class DefaultHeaderComponent extends HeaderComponent {
   get email(): any {
     return this.registerForm.get('email');
   }
-  get username(): any {
-    return this.registerForm.get('username');
+  // get username(): any {
+  //   return this.registerForm.get('username');
+  // }
+
+  get userLevel(): any {
+    return this.registerForm.get('userLevel');
   }
 
   public showModal() {
     $("#loginModal").toggle("slow");
   }
   public closeModal() {
+    this.registerForm.reset();
     $("#loginModal").hide("slow");
+  }
+
+  onRoleChange($event: any = '') {
+    console.log(this.registerForm.value.email);
+    this.registerForm.value.userLevel = $event.value;
   }
 
   registerFormSubmit(): void {
