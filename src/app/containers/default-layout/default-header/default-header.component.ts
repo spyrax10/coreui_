@@ -6,6 +6,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 
+interface IRole {role_id: number; role_name: string;}
 
 @Component({
   selector: 'app-default-header',
@@ -18,14 +19,16 @@ export class DefaultHeaderComponent extends HeaderComponent {
     middlename: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    //username: ['', [Validators.required, Validators.minLength(6)]],
-    userLevel: ['']
+    username: ['', [Validators.required, Validators.minLength(6)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    userLevel: ['1', [Validators.required]]
   });
 
   @Input() sidebarId: string = "sidebar";
 
   user_fullName = '';
   user_role: number = 0;
+  public selected_row: number = 1;
 
   constructor(public swalService: SwalService, public user: Users, private authService: AuthService, 
     private fb: FormBuilder) {
@@ -33,13 +36,20 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
     
-    if (this.authService.isAuthenticated$) {
-      console.log("Authorized");
-    }
-    else {
-      console.log("Get Out");
-    }
+    console.log(this.user.getCurrentUser());
   }
+
+  public role_type: IRole[] = [
+    {
+      role_id: 1, role_name :"Administrator"
+    },
+    {
+      role_id: 2, role_name :"User"
+    },
+    {
+      role_id: 3, role_name :"Sales"
+    }
+  ]
 
   get firstName(): any {
     return this.registerForm.get('firstName');
@@ -54,25 +64,37 @@ export class DefaultHeaderComponent extends HeaderComponent {
   get email(): any {
     return this.registerForm.get('email');
   }
-  // get username(): any {
-  //   return this.registerForm.get('username');
-  // }
+  get username(): any {
+    return this.registerForm.get('username');
+  }
+
+  get password(): any {
+    return this.registerForm.get('password');
+  }
 
   get userLevel(): any {
-    return this.registerForm.get('userLevel');
+    return this.selected_row ;
   }
 
   public showModal() {
     $("#loginModal").toggle("slow");
   }
   public closeModal() {
-    this.registerForm.reset();
+    this.formReset();
     $("#loginModal").hide("slow");
   }
 
-  onRoleChange($event: any = '') {
-    console.log(this.registerForm.value.email);
-    this.registerForm.value.userLevel = $event.value;
+  onRoleChange($event: any) : void {
+    this.formReset();
+    this.selected_row = $event.target.value;
+    this.registerForm.patchValue({
+      userLevel: this.selected_row
+    });
+  }
+
+  formReset() {
+    this.registerForm.reset();
+    this.selected_row = 1;
   }
 
   registerFormSubmit(): void {

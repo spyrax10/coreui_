@@ -92,18 +92,10 @@ export class LoginComponent {
             if (token && this.authService.isAuthenticated$) {
               localStorage.setItem("aToken", token);
               this.http.getData(this.user.user_api_link(username, password)).subscribe(result => {
-                Object.keys(result).forEach(key => {
-                  if (result[key]['mailingAddress'] === email) {
-                    this.invalidLogin = false; 
-                    localStorage.setItem("userData", JSON.stringify(result[key]));
-                    this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
-                    location.replace('/dashboard');
-                  }
-                  else {
-                    this.invalidLogin = true; 
-                    this.swal.commonSwalCentered('Invalid User Account!', 'error');
-                  }
-                });
+                this.invalidLogin = false; 
+                localStorage.setItem("userData", JSON.stringify(result));
+                this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
+                location.replace('/dashboard');
               }, error => {
                 this.invalidLogin = true; 
                 this.swal.commonSwalCentered('Cannot validated YOU this time!', 'error');  
