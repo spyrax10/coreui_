@@ -80,22 +80,19 @@ export class DefaultHeaderComponent extends HeaderComponent {
     $("#loginModal").toggle("slow");
   }
   public closeModal() {
-    this.formReset();
+    this.registerForm.reset();
+    $('#id_userLevel').val("1");
     $("#loginModal").hide("slow");
   }
 
   onRoleChange($event: any) : void {
-    this.formReset();
+    this.registerForm.reset();
     this.selected_row = $event.target.value;
     this.registerForm.patchValue({
       userLevel: this.selected_row
     });
   }
 
-  formReset() {
-    this.registerForm.reset();
-    this.selected_row = 1;
-  }
 
   registerFormSubmit(): void {
     const formData = this.registerForm.value;

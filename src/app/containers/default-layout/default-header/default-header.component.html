@@ -126,7 +126,7 @@
         <form [formGroup]="registerForm" novalidate (ngSubmit)="registerFormSubmit()" class="row g-3">
           <div class="col-md-4">
             <label for="id_userLevel" class="form-label">User Role: </label>
-            <select class="form-control" cSelect id="id_userLevel" (change)="onRoleChange($event)">
+            <select class="form-control" cSelect id="id_userLevel" id="id_userLevel" (change)="onRoleChange($event)">
               <option *ngFor="let role of role_type; index as i" [value]="role.role_id">
                 {{ role.role_name }}
               </option>
