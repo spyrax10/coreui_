@@ -12,6 +12,10 @@ export class Users {
         return this.http.getAPI('Useraccount') + '/' + username + '/' + password;
     }
 
+    public api_new_user() {
+        return this.http.getAPI('Useraccount') + '/newUser?';
+    }
+
     public getCurrentUser(): any {
         return JSON.parse(localStorage.getItem('userData'));
     }

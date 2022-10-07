@@ -5,6 +5,8 @@ import { Users } from '../../../_services/user.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as $ from 'jquery';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { ApiHttpService } from 'src/app/_services/api-http.service';
 
 interface IRole {role_id: number; role_name: string;}
 
@@ -15,13 +17,13 @@ interface IRole {role_id: number; role_name: string;}
 export class DefaultHeaderComponent extends HeaderComponent {
 
   registerForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    userLevel: ['1', [Validators.required]],
     firstName: ['', [Validators.required]],
     middlename: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(6)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    userLevel: ['1', [Validators.required]]
   });
 
   @Input() sidebarId: string = "sidebar";
@@ -31,7 +33,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public selected_row: number = 1;
 
   constructor(public swalService: SwalService, public user: Users, private authService: AuthService, 
-    private fb: FormBuilder) {
+    private fb: FormBuilder,  public http: ApiHttpService, public swal: SwalService) {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
@@ -93,9 +95,36 @@ export class DefaultHeaderComponent extends HeaderComponent {
     });
   }
 
+  onValidate() {
+    return this.registerForm.status === 'VALID';
+  }
 
   registerFormSubmit(): void {
     const formData = this.registerForm.value;
+    
+    if (this.onValidate()) {
+      let params = new HttpParams()
+        .set('email', this.registerForm.value.email)
+        .set('secLevel', this.registerForm.value.userLevel)
+        .set('first', this.registerForm.value.firstName)
+        .set('middle', this.registerForm.value.middlename)
+        .set('lastName', this.registerForm.value.lastName)
+        .set('username', this.registerForm.value.username)
+        .set('password', this.registerForm.value.password)
+      
+      this.swal.swalLoading("Adding New User... Please Wait...");
+      this.http.postData(this.user.api_new_user(), params).subscribe(result => {
+        if (result) {
+          this.swal.commonSwalCentered('Registered New User...', 'error');  
+          this.closeModal();
+        }
+      }, ((error: HttpErrorResponse) => {
+        this.swal.commonSwalCentered(error.error, 'error');  
+      }));
+      
+        
+    }
+    
     console.log(formData);
     // Api Request Here
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'; 
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'; 
 import { SwalService } from '../_services/swal-service';
 import { Constants } from '../_config/constant';
 
@@ -15,6 +15,15 @@ constructor( private http: HttpClient, public swalService: SwalService ) {}
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem("aToken")
             } 
+        });
+    }
+
+    public postData(api: any = '', params: any) {
+        return this.http.get<any>(api, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("aToken")
+            },
+            params: params
         });
     }
 
