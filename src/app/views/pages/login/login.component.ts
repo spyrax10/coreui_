@@ -8,6 +8,7 @@ import { RecaptchaErrorParameters} from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '@auth0/auth0-angular';
 import { first, iif } from 'rxjs';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -77,8 +78,9 @@ export class LoginComponent {
     const ignoreCache = true;
 
     if (this.onValidate()) {
-      let username = this.simpleForm.value.username;
-      let password = this.simpleForm.value.password;
+      let params = new HttpParams()
+        .set("username", this.simpleForm.value.username)
+        .set("password", this.simpleForm.value.password);
       let email = "";
 
       // if (this.reCAPTCHAToken !== '') {
@@ -91,17 +93,20 @@ export class LoginComponent {
 
             if (token && this.authService.isAuthenticated$) {
               localStorage.setItem("aToken", token);
-              this.http.getData(this.user.user_api_link(username, password)).subscribe(result => {
+              this.http.getData(this.user.api_get_user(), params).subscribe(result => {
                 this.invalidLogin = false; 
                 localStorage.setItem("userData", JSON.stringify(result));
                 this.swal.commonSwalCentered('Sign In Sucessfully!!!', 'success');
                 location.replace('/dashboard');
-              }, error => {
-                this.invalidLogin = true; 
-                this.swal.commonSwalCentered('Cannot validated YOU this time!', 'error');  
-                this.reCAPTCHAToken = '';
-                //grecaptcha.reset();
-              }
+              }, ((error: HttpErrorResponse) => {
+                this.invalidLogin = true;
+                if (error.status === 0) {
+                  this.swal.commonSwalCentered("Your IP has been bloked by server...", 'error'); 
+                }
+                else {
+                  this.swal.commonSwalCentered(error.error, 'error'); 
+                }
+              })
             );
           }
         }, error => {

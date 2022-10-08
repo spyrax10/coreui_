@@ -113,20 +113,18 @@ export class DefaultHeaderComponent extends HeaderComponent {
         .set('password', this.registerForm.value.password)
       
       this.swal.swalLoading("Adding New User... Please Wait...");
-      this.http.postData(this.user.api_new_user(), params).subscribe(result => {
-        if (result) {
-          this.swal.commonSwalCentered('Registered New User...', 'error');  
+
+      this.http.getData(this.user.api_new_user(), params).subscribe(result => {
+      }, ((error: HttpErrorResponse) => {
+        if (error.status === 200) {
+          this.swal.commonSwalCentered('Registered New User...', 'success');  
           this.closeModal();
         }
-      }, ((error: HttpErrorResponse) => {
-        this.swal.commonSwalCentered(error.error, 'error');  
+        else {
+          this.swal.commonSwalCentered(error.error, 'error');  
+        }
       }));
-      
-        
     }
-    
-    console.log(formData);
-    // Api Request Here
   }
 
   logOut() {

@@ -10,15 +10,7 @@ import { Constants } from '../_config/constant';
 export class ApiHttpService {
     
 constructor( private http: HttpClient, public swalService: SwalService ) {} 
-    public getData(api: any = '') {
-        return this.http.get<any>(api, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem("aToken")
-            } 
-        });
-    }
-
-    public postData(api: any = '', params: any) {
+    public getData(api: any = '', params: any) {
         return this.http.get<any>(api, {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem("aToken")
@@ -26,7 +18,7 @@ constructor( private http: HttpClient, public swalService: SwalService ) {}
             params: params
         });
     }
-
+    
     public getAPI(module: string = '') {
         return Constants.API_ENDPOINT + "api/" + module;
     }

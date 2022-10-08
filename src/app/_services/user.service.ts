@@ -7,11 +7,9 @@ import { SwalService } from './swal-service';
 export class Users {
     constructor(public http: ApiHttpService, public swal: SwalService) {
     }
-    
-    public user_api_link(username: any = '', password: any = '') {
-        return this.http.getAPI('Useraccount') + '/' + username + '/' + password;
+    public api_get_user() {
+        return this.http.getAPI('Useraccount') + '/getUser?';
     }
-
     public api_new_user() {
         return this.http.getAPI('Useraccount') + '/newUser?';
     }
