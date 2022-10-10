@@ -14,7 +14,7 @@ export class Users {
     }
 
     public api_send_email() {
-        return this.http.getAPI('Management') + '/sendEmail?';
+        return this.http.getAPI('Management') + '/sendEmailCPanel?';
     }
 
     public getCurrentUser(): any {
