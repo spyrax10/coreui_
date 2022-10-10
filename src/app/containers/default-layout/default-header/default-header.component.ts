@@ -110,14 +110,25 @@ export class DefaultHeaderComponent extends HeaderComponent {
         .set('middle', this.registerForm.value.middlename)
         .set('lastName', this.registerForm.value.lastName)
         .set('username', this.registerForm.value.username)
-        .set('password', this.registerForm.value.password)
+        .set('password', this.registerForm.value.password);
+
+      let email_params = new HttpParams()
+        .set('email', this.registerForm.value.email)
+        .set('subject', "Welcome Greetings...")
+        .set('text', "Welcome to brotherhood, " + this.registerForm.value.username + "!")
       
       this.swal.swalLoading("Adding New User... Please Wait...");
 
       this.http.getData(this.user.api_new_user(), params).subscribe(result => {
       }, ((error: HttpErrorResponse) => {
         if (error.status === 200) {
-          this.swal.commonSwalCentered('Registered New User...', 'success');  
+          this.http.getData(this.user.api_send_email(), email_params).subscribe(emailRes => {
+          }, (error2: HttpErrorResponse) => {
+            if (error2.status != 200) {
+              this.swal.commonSwalCentered("Email Notification has been Rejected...", 'error');  
+            }
+          });
+          this.swal.commonSwalCentered('New User Registered...', 'success');  
           this.closeModal();
         }
         else {

@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core'; 
 import { ApiHttpService } from '../_services/api-http.service';
-import { SwalService } from './swal-service';
 
 @Injectable({ providedIn: 'root' })
 
 export class Users {
-    constructor(public http: ApiHttpService, public swal: SwalService) {
+    constructor(public http: ApiHttpService) {
     }
     public api_get_user() {
         return this.http.getAPI('Useraccount') + '/getUser?';
     }
     public api_new_user() {
         return this.http.getAPI('Useraccount') + '/newUser?';
+    }
+
+    public api_send_email() {
+        return this.http.getAPI('Management') + '/sendEmail?';
     }
 
     public getCurrentUser(): any {
