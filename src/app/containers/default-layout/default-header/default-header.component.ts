@@ -115,7 +115,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
       let email_params = new HttpParams()
         .set('email', this.registerForm.value.email)
         .set('subject', "Welcome Greetings...")
+        .set('body_title', "Registration Notice")
         .set('text', "Welcome to brotherhood, " + this.registerForm.value.username + "!")
+        .set('username', this.user.getUserFullName())
       
       this.swal.swalLoading("Adding New User... Please Wait...");
 

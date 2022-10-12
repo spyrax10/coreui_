@@ -101,7 +101,7 @@ export class LoginComponent {
               }, ((error: HttpErrorResponse) => {
                 this.invalidLogin = true;
                 if (error.status === 0) {
-                  this.swal.commonSwalCentered("Your IP has been bloked by server...", 'error'); 
+                  this.swal.commonSwalCentered("Cannot reach server...", 'error'); 
                 }
                 else {
                   this.swal.commonSwalCentered(error.error, 'error'); 
