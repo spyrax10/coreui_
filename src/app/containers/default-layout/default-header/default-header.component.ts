@@ -38,8 +38,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
     
-    console.log(this.user.getCurrentUser());
   }
+
+  public user_list: any;
 
   public role_type: IRole[] = [
     {
@@ -78,13 +79,26 @@ export class DefaultHeaderComponent extends HeaderComponent {
     return this.selected_row ;
   }
 
-  public showModal() {
-    $("#loginModal").toggle("slow");
+  public showModal(type: string = "") {
+
+    if (type === 'login') {
+      $("#loginModal").toggle("slow");
+    }
+    else if (type === 'user') {
+      this.fetchUsers();
+      $("#userModal").toggle("slow");
+    }
   }
-  public closeModal() {
-    this.registerForm.reset();
-    $('#id_userLevel').val("1");
-    $("#loginModal").hide("slow");
+  public closeModal(type: string = "") {
+
+    if (type === 'login') {
+      this.registerForm.reset();
+      $('#id_userLevel').val("1");
+      $("#loginModal").hide("slow");
+    }
+    else if (type === 'user') {
+      $("#userModal").hide("slow");
+    }
   }
 
   onRoleChange($event: any) : void {
@@ -97,6 +111,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   onValidate() {
     return this.registerForm.status === 'VALID';
+  }
+
+  fetchUsers() {
+    this.http.getData(this.user.api_get_alluser(), "").subscribe(data => {
+      this.user_list = data;
+    }, ((error: HttpErrorResponse) => {
+      console.log("Error: " + error.message);
+    }));
   }
 
   registerFormSubmit(): void {
@@ -130,7 +152,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
               this.swal.commonSwalCentered("Email Notification has been Rejected...", 'error');  
             }
           });
-          this.swal.commonSwalCentered('New User Registered...', 'success');  
+          this.swal.commonSwalCentered('New User Registered...', 'success'); 
+          this.fetchUsers(); 
           this.closeModal();
         }
         else {

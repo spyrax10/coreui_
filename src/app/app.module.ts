@@ -49,6 +49,7 @@ import {
   ProgressModule,
   SharedModule,
   SidebarModule,
+  TableModule,
   TabsModule,
   UtilitiesModule,
 } from '@coreui/angular';
@@ -103,6 +104,7 @@ export function tokenGetter() {
     RecaptchaV3Module,
     RecaptchaModule,
     ModalModule,
+    TableModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

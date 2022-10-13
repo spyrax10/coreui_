@@ -94,9 +94,9 @@
           <!-- <button type="button" class="btn btn-info px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
             Registration Now
           </button> -->
-          <a [routerLink]="[]" (click)="showModal()" cDropdownItem>
+          <a [routerLink]="[]" (click)="showModal('user')" cDropdownItem>
             <svg cIcon class="me-2" name="cilPlus"></svg>
-            Add New User
+            User Management
           </a>
         </div>
 
@@ -115,12 +115,66 @@
 
 <!-- Modal -->
 
+<div class="modal" id="userModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="UserModalLabel">User Management</h5>
+        <button type="button" class="btn-close" (click)="closeModal('user')" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <button cButton color="info" variant="outline" class="mb-2" (click)="showModal('login')">Create New User</button>
+
+        <table bordered [hover]="true" [responsive]="true" [striped]="true"
+          align="middle" cTable class="mb-0 border">
+
+          <thead cTableColor="dark">
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Username</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let user of user_list; index as i">
+              <td>
+                <span>{{ user[0] }}</span> 
+              </td>
+
+              <td>
+                <span>{{ user[1] }}</span> 
+              </td>
+
+              <td>
+                <span>{{ user[2] }}</span> 
+              </td>
+
+              <td>
+                <span>{{ user[3] }}</span> 
+              </td>
+
+              <td>
+                <span>{{ user[4] | titlecase }}</span> 
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="loginModal">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="loginModalLabel">Registration Form</h5>
-        <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" (click)="closeModal('login')" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="registerForm" novalidate (ngSubmit)="registerFormSubmit()" class="row g-3">

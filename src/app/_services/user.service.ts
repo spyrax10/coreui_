@@ -9,6 +9,9 @@ export class Users {
     public api_get_user() {
         return this.http.getAPI('Useraccount') + '/getUser?';
     }
+    public api_get_alluser() {
+        return this.http.getAPI('Useraccount') + '/getAllUser?';
+    }
     public api_new_user() {
         return this.http.getAPI('Useraccount') + '/newUser?';
     }
