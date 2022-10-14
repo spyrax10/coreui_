@@ -136,6 +136,7 @@
               <th>Email</th>
               <th>Username</th>
               <th>Role</th>
+              <th></th> <th></th>
             </tr>
           </thead>
 
@@ -160,6 +161,19 @@
               <td>
                 <span>{{ user[4] | titlecase }}</span> 
               </td>
+              
+              <td>
+                <button cButton color="dark" variant="outline" size="sm">
+                  <svg cIcon name="cilPen"></svg>
+                </button>
+              </td>
+
+              <td *ngIf="user_name !== user[3]">
+                <button type="button" cButton color="danger" (click)="deleteUser(user[0])" variant="outline" size="sm">
+                  <svg cIcon name="cilTrash"></svg>
+                </button>
+              </td>
+
             </tr>
           </tbody>
 

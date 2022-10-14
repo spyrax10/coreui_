@@ -2,11 +2,11 @@ import { Component, Input} from '@angular/core';
 import { SwalService } from '../../../_services/swal-service';
 import { HeaderComponent } from '@coreui/angular';
 import { Users } from '../../../_services/user.service';
-import { AuthService } from '@auth0/auth0-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ApiHttpService } from 'src/app/_services/api-http.service';
+import Swal from 'sweetalert2';
 
 interface IRole {role_id: number; role_name: string;}
 
@@ -30,15 +30,15 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   user_fullName = '';
   user_role: number = 0;
+  user_name: string = '';
   public selected_row: number = 1;
   public user_list: any;
 
-  constructor(public swalService: SwalService, public user: Users, private authService: AuthService, 
-    private fb: FormBuilder,  public http: ApiHttpService, public swal: SwalService) {
+  constructor(private user: Users, private fb: FormBuilder,  public http: ApiHttpService, public swal: SwalService) {
     super();
     this.user_fullName = this.user.getUserFullName();
     this.user_role = this.user.getUserRole();
-    
+    this.user_name = this.user.getUserName();
   }
 
   public role_type: IRole[] = [
@@ -120,6 +120,35 @@ export class DefaultHeaderComponent extends HeaderComponent {
     }));
   }
 
+  deleteUser(value: any) {
+    let params = new HttpParams().set('userID', value);
+
+    Swal.fire({
+      title: "Delete Confirmation",
+      text: "Are you sure to delete Selected User?",
+      icon: "warning",
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      showCancelButton: true,
+      confirmButtonText: "Yes, Delete Selected User",
+      cancelButtonText: "No, Return To the List"
+    }).then((response) => {
+      if (response.isConfirmed) {
+
+        this.swal.swalLoading("Deleting User... Please Wait...");
+        this.http.getData(this.user.api_delete_user(), params).subscribe(result => {
+          this.swal.commonSwalCentered("User Sucessfully Deleted...", 'success');
+          this.fetchUsers();
+        }, ((error: HttpErrorResponse) => {
+          this.swal.commonSwalCentered(error.message, 'error');
+        }));
+      }
+      else if (response.dismiss === Swal.DismissReason.cancel) {
+        return;
+      }
+    });
+  }
+
   registerFormSubmit(): void {
     const formData = this.registerForm.value;
     
@@ -164,8 +193,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   logOut() {
-    this.swalService.centeredConfirm(
-      true, '', 
+    this.swal.centeredConfirm(
+      'logout', '', 
       "Logout Confirmation",
       "Are you sure to Logout?",
       "warning", false, false, true,

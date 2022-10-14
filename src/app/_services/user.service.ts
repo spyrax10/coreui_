@@ -1,10 +1,12 @@
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core'; 
 import { ApiHttpService } from '../_services/api-http.service';
+import { SwalService } from './swal-service';
 
 @Injectable({ providedIn: 'root' })
 
 export class Users {
-    constructor(public http: ApiHttpService) {
+    constructor(public http: ApiHttpService,  public swal: SwalService) {
     }
     public api_get_user() {
         return this.http.getAPI('Useraccount') + '/getUser?';
@@ -14,6 +16,10 @@ export class Users {
     }
     public api_new_user() {
         return this.http.getAPI('Useraccount') + '/newUser?';
+    }
+
+    public api_delete_user() {
+        return this.http.getAPI('Useraccount') + '/deleteUser?';
     }
 
     public api_send_email() {
