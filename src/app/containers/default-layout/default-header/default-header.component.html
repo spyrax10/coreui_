@@ -124,7 +124,7 @@
       </div>
 
       <div class="modal-body">
-        <button cButton color="info" variant="outline" class="mb-2" (click)="showModal('login')">Create New User</button>
+        <button cButton color="info" variant="outline" class="mb-2" (click)="showModal('reg')">Create New User</button>
 
         <table bordered [hover]="true" [responsive]="true" [striped]="true"
           align="middle" cTable class="mb-0 border">
@@ -169,12 +169,12 @@
   </div>
 </div>
 
-<div class="modal" id="loginModal">
+<div class="modal" id="regModal">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Registration Form</h5>
-        <button type="button" class="btn-close" (click)="closeModal('login')" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="regModalLabel">Registration Form</h5>
+        <button type="button" class="btn-close" (click)="closeModal('reg')" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="registerForm" novalidate (ngSubmit)="registerFormSubmit()" class="row g-3">

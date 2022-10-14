@@ -31,6 +31,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   user_fullName = '';
   user_role: number = 0;
   public selected_row: number = 1;
+  public user_list: any;
 
   constructor(public swalService: SwalService, public user: Users, private authService: AuthService, 
     private fb: FormBuilder,  public http: ApiHttpService, public swal: SwalService) {
@@ -39,8 +40,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.user_role = this.user.getUserRole();
     
   }
-
-  public user_list: any;
 
   public role_type: IRole[] = [
     {
@@ -81,8 +80,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   public showModal(type: string = "") {
 
-    if (type === 'login') {
-      $("#loginModal").toggle("slow");
+    if (type === 'reg') {
+      $("#regModal").toggle("slow");
     }
     else if (type === 'user') {
       this.fetchUsers();
@@ -91,10 +90,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
   public closeModal(type: string = "") {
 
-    if (type === 'login') {
+    if (type === 'reg') {
       this.registerForm.reset();
       $('#id_userLevel').val("1");
-      $("#loginModal").hide("slow");
+      $("#regModal").hide("slow");
     }
     else if (type === 'user') {
       $("#userModal").hide("slow");
@@ -146,15 +145,16 @@ export class DefaultHeaderComponent extends HeaderComponent {
       this.http.getData(this.user.api_new_user(), params).subscribe(result => {
       }, ((error: HttpErrorResponse) => {
         if (error.status === 200) {
-          this.http.getData(this.user.api_send_email(), email_params).subscribe(emailRes => {
-          }, (error2: HttpErrorResponse) => {
-            if (error2.status != 200) {
-              this.swal.commonSwalCentered("Email Notification has been Rejected...", 'error');  
-            }
-          });
+          // this.http.getData(this.user.api_send_email(), email_params).subscribe(emailRes => {
+          // }, (error2: HttpErrorResponse) => {
+          //   if (error2.status != 200) {
+          //     this.swal.commonSwalCentered("Email Notification has been Rejected...", 'error');  
+          //   }
+          // });
           this.swal.commonSwalCentered('New User Registered...', 'success'); 
           this.fetchUsers(); 
-          this.closeModal();
+          this.registerForm.reset();
+          $('#id_userLevel').val("1");
         }
         else {
           this.swal.commonSwalCentered(error.error, 'error');  
