@@ -91,13 +91,17 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public closeModal(type: string = "") {
 
     if (type === 'reg') {
-      this.registerForm.reset();
-      $('#id_userLevel').val("1");
+      this.resetModal();
       $("#regModal").hide("slow");
     }
     else if (type === 'user') {
       $("#userModal").hide("slow");
     }
+  }
+
+  public resetModal() {
+    this.registerForm.reset();
+    $('#id_userLevel').val("1");
   }
 
   onRoleChange($event: any) : void {
@@ -182,8 +186,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
           // });
           this.swal.commonSwalCentered('New User Registered...', 'success'); 
           this.fetchUsers(); 
-          this.registerForm.reset();
-          $('#id_userLevel').val("1");
+          this.resetModal();
         }
         else {
           this.swal.commonSwalCentered(error.error, 'error');  
