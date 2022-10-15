@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
 
 import { RecaptchaModule, RecaptchaSettings, RecaptchaV3Module, RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 
 import { Auth0, environment} from '../environments/environment';
+import { SearchFilterPipe } from '../app/_services/search-filter.pipe';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -71,8 +72,9 @@ export function tokenGetter() {
 }
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS],
+  declarations: [AppComponent, SearchFilterPipe, ...APP_CONTAINERS],
   imports: [
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

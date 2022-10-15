@@ -15,7 +15,8 @@ interface IRole {role_id: number; role_name: string;}
   templateUrl: './default-header.component.html',
 })
 export class DefaultHeaderComponent extends HeaderComponent {
-
+  @Input() sidebarId: string = "sidebar";
+  searchText: string;
   registerForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     userLevel: ['1', [Validators.required]],
@@ -25,8 +26,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
     username: ['', [Validators.required, Validators.minLength(6)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
-
-  @Input() sidebarId: string = "sidebar";
 
   user_fullName = '';
   user_role: number = 0;

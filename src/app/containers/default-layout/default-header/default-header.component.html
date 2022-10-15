@@ -124,8 +124,19 @@
       </div>
 
       <div class="modal-body">
-        <button cButton color="info" variant="outline" class="mb-2" (click)="showModal('reg')">Create New User</button>
-
+        
+        <c-row>
+          <div class="col-md-8">
+            <button cButton color="info" variant="outline" class="mb-2" (click)="showModal('reg')">Create New User</button>
+          </div>
+  
+          <div class="col-md-4">
+            <div class="form-group">
+              <input type="text" class="form-control search-field" placeholder="Search Here..." [(ngModel)]="searchText">
+            </div>
+          </div>
+        </c-row>
+       
         <table bordered [hover]="true" [responsive]="true" [striped]="true"
           align="middle" cTable class="mb-0 border">
 
@@ -141,7 +152,7 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let user of user_list; index as i">
+            <tr *ngFor="let user of user_list | searchFilter: searchText; index as i">
               <td>
                 <span>{{ user[0] }}</span> 
               </td>
