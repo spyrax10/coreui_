@@ -4,27 +4,24 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
-
 import { RecaptchaModule, RecaptchaSettings, RecaptchaV3Module, RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
-
 import { Auth0, environment} from '../environments/environment';
 import { SearchFilterPipe } from '../app/_services/search-filter.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+// Import routing module
+import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule } from './material.module';
+// Import app component
+import { AppComponent } from './app.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { IconModule, IconSetService } from '@coreui/icons-angular';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
   PerfectScrollbarModule,
 } from 'ngx-perfect-scrollbar';
-
-// Import routing module
-import { AppRoutingModule } from './app-routing.module';
-import { MaterialModule } from './material.module';
-
-// Import app component
-import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 
 // Import containers
 import {
@@ -55,8 +52,6 @@ import {
   TabsModule,
   UtilitiesModule,
 } from '@coreui/angular';
-
-import { IconModule, IconSetService } from '@coreui/icons-angular';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: false,

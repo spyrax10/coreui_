@@ -109,11 +109,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
       this.searchText = "";
     }
   }
-
-  pageChange() : void {
-    this.p += 1;
-  }
-
   onRoleChange($event: any) : void {
     this.registerForm.reset();
     this.selected_row = $event.target.value;
