@@ -152,7 +152,8 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let user of user_list | searchFilter: searchText; index as i">
+            <tr *ngFor="let user of user_list | searchFilter: searchText | 
+              paginate: { itemsPerPage: 5, currentPage: p }; index as i">
               <td>
                 <span>{{ user[0] }}</span> 
               </td>
@@ -187,8 +188,15 @@
 
             </tr>
           </tbody>
-
         </table>
+        <footer>
+          <div class="mt-2 d-flex justify-content-end">
+            <pagination-controls (pageChange)="p = $event" 
+              (responsive)="true"
+            >
+            </pagination-controls>
+          </div>
+        </footer>
       </div>
     </div>
   </div>

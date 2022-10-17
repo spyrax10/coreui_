@@ -32,6 +32,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   user_name: string = '';
   public selected_row: number = 1;
   public user_list: any;
+  p: number = 1;
 
   constructor(private user: Users, private fb: FormBuilder,  public http: ApiHttpService, public swal: SwalService) {
     super();
@@ -107,6 +108,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
     else if (type === 'user') {
       this.searchText = "";
     }
+  }
+
+  pageChange() : void {
+    this.p += 1;
   }
 
   onRoleChange($event: any) : void {

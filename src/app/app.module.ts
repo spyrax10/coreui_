@@ -9,6 +9,7 @@ import { RecaptchaModule, RecaptchaSettings, RecaptchaV3Module, RECAPTCHA_SETTIN
 
 import { Auth0, environment} from '../environments/environment';
 import { SearchFilterPipe } from '../app/_services/search-filter.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -107,6 +108,7 @@ export function tokenGetter() {
     RecaptchaModule,
     ModalModule,
     TableModule,
+    NgxPaginationModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
