@@ -17,22 +17,23 @@ interface IRole {role_id: number; role_name: string;}
 export class DefaultHeaderComponent extends HeaderComponent {
   @Input() sidebarId: string = "sidebar";
   searchText: string;
-  registerForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    userLevel: ['1', [Validators.required]],
-    firstName: ['', [Validators.required]],
-    middlename: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
-    username: ['', [Validators.required, Validators.minLength(6)]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-  });
-
   user_fullName = '';
   user_role: number = 0;
   user_name: string = '';
   public selected_row: number = 1;
   public user_list: any;
-  p: number = 1;
+  page: number = 1;
+  selected_user: number = 0;
+
+  registerForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    userLevel: ['1', [Validators.required]],
+    firstName: ['', [Validators.required]],
+    middlename: ['', [Validators.required, Validators.minLength(1)]],
+    lastName: ['', [Validators.required]],
+    username: ['', [Validators.required, Validators.minLength(6)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  });
 
   constructor(private user: Users, private fb: FormBuilder,  public http: ApiHttpService, public swal: SwalService) {
     super();
@@ -78,9 +79,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
     return this.selected_row ;
   }
 
-  public showModal(type: string = "") {
+  public showModal(type: string = "", userID: any = "") {
 
     if (type === 'reg') {
+      if (userID !== "") {
+        this.selected_user = userID;
+        this.fetchUsers(userID);
+      }
+
       $("#regModal").toggle("slow");
     }
     else if (type === 'user') {
@@ -104,13 +110,16 @@ export class DefaultHeaderComponent extends HeaderComponent {
     if (type === 'reg') {
       this.registerForm.reset();
       $('#id_userLevel').val("1");
+      this.selected_user = 0;
     }
     else if (type === 'user') {
       this.searchText = "";
     }
   }
   onRoleChange($event: any) : void {
-    this.registerForm.reset();
+    if (this.selected_user === 0) {
+      this.registerForm.reset();
+    }
     this.selected_row = $event.target.value;
     this.registerForm.patchValue({
       userLevel: this.selected_row
@@ -121,11 +130,28 @@ export class DefaultHeaderComponent extends HeaderComponent {
     return this.registerForm.status === 'VALID';
   }
 
-  fetchUsers() {
-    this.http.getData(this.user.api_get_alluser(), "").subscribe(data => {
-      this.user_list = data;
+  fetchUsers(userID: any = "") {
+    let params = userID !== "" ? new HttpParams().set('userID', userID) : "";
+    this.http.getData(this.user.api_get_alluser(), params).subscribe(data => {
+      if (userID !== "") {
+        data.map((key: any) => {
+          this.registerForm.setValue({
+            email: key[2],
+            userLevel: key[5],
+            firstName: key[6],
+            middlename: key[7],
+            lastName: key[8],
+            username: key[3],
+            password: key[9]             
+          });
+          $('#id_userLevel').val(key[5]);
+        });
+      }
+      else {
+        this.user_list = data;
+      }
     }, ((error: HttpErrorResponse) => {
-      console.log("Error: " + error.message);
+      this.swal.commonSwalCentered("Internal Server Error!", 'error');
     }));
   }
 
@@ -169,7 +195,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
         .set('middle', this.registerForm.value.middlename)
         .set('lastName', this.registerForm.value.lastName)
         .set('username', this.registerForm.value.username)
-        .set('password', this.registerForm.value.password);
+        .set('password', this.registerForm.value.password)
+        .set('userID', this.selected_user);
 
       let email_params = new HttpParams()
         .set('email', this.registerForm.value.email)
@@ -178,7 +205,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
         .set('text', "Welcome to brotherhood, " + this.registerForm.value.username + "!")
         .set('username', this.user.getUserFullName())
       
-      this.swal.swalLoading("Adding New User... Please Wait...");
+      this.swal.swalLoading(
+        this.selected_user > 0 ? "Updating User... Please Wait..." : 
+          "Adding New User... Please Wait..."
+      );
 
       this.http.getData(this.user.api_new_user(), params).subscribe(result => {
       }, ((error: HttpErrorResponse) => {
@@ -189,14 +219,23 @@ export class DefaultHeaderComponent extends HeaderComponent {
           //     this.swal.commonSwalCentered("Email Notification has been Rejected...", 'error');  
           //   }
           // });
-          this.swal.commonSwalCentered('New User Registered...', 'success'); 
+          
+          this.swal.commonSwalCentered(
+            this.selected_user > 0 ? 'User Updated' : 'New User Registered...', 
+            'success'
+          ); 
           this.fetchUsers(); 
-          this.resetModal('reg');
+          this.closeModal('reg');
         }
         else {
           this.swal.commonSwalCentered(error.error, 'error');  
         }
       }));
+    }
+    else {
+      const data = this.registerForm.value;
+      console.log(data);
+      this.swal.commonSwalCentered("Incomplete Details...", 'error');  
     }
   }
 

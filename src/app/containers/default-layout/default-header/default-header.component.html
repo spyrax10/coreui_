@@ -110,8 +110,7 @@
   </c-dropdown>
 </ng-template>
 
-<!-- Modal -->
-
+<!-- User List -->
 <div class="modal" id="userModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -150,7 +149,7 @@
 
           <tbody>
             <tr *ngFor="let user of user_list | searchFilter: searchText | 
-              paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+              paginate: { itemsPerPage: 5, currentPage: page }; index as i">
               <td>
                 <span>{{ user[0] }}</span> 
               </td>
@@ -171,8 +170,8 @@
                 <span>{{ user[4] | titlecase }}</span> 
               </td>
               
-              <td>
-                <button cButton color="dark" variant="outline" size="sm">
+              <td *ngIf="user_name !== user[3]">
+                <button cButton color="dark" (click)="showModal('reg', user[0])" variant="outline" size="sm">
                   <svg cIcon name="cilPen"></svg>
                 </button>
               </td>
@@ -188,7 +187,7 @@
         </table>
         <footer>
           <div class="mt-2 d-flex justify-content-end">
-            <pagination-controls (pageChange)="p = $event" 
+            <pagination-controls (pageChange)="page = $event" 
               (responsive)="true"
             >
             </pagination-controls>
@@ -198,12 +197,14 @@
     </div>
   </div>
 </div>
+<!-- End User List -->
 
+<!-- Registration Form -->
 <div class="modal" id="regModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="regModalLabel">Registration Form</h5>
+        <h5 class="modal-title" id="regModalLabel">{{ selected_user > 0 ? 'Edit User Profile' : 'Registration Form' }}</h5>
         <button type="button" class="btn-close" (click)="closeModal('reg')" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -232,9 +233,9 @@
             <div *ngIf="firstName.touched && firstName.errors?.required" class="d-block invalid-feedback">Provide your First Name.</div>
           </div>
           <div class="col-md-4">
-            <label for="id_middlename" class="form-label">Middle Name: </label>
-            <input formControlName="middlename" type="text" class="form-control" id="id_middlename" required>
-            <div *ngIf="middlename.touched && middlename.errors?.required" class="d-block invalid-feedback">Provide your Middle Name.</div>
+            <label for="id_middlename" class="form-label">Middle Initial: </label>
+            <input formControlName="middlename" type="text" maxlength="1" class="form-control" id="id_middlename" required>
+            <div *ngIf="middlename.touched && middlename.errors?.required" class="d-block invalid-feedback">Provide your Middle Initial.</div>
           </div>
           <div class="col-md-4">
             <label for="id_lastName" class="form-label">Last name: </label>
@@ -256,9 +257,11 @@
               <div *ngIf="password.touched && password.errors?.required" class="d-block invalid-feedback">Provide your Password.</div>
           </div>
 
-          <div class="col-md-6 mt-4">
-            <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary px-5">Submit</button>
-            <button type="button" (click)="resetModal()" class="btn btn-secondary px-3 ms-2">Reset</button>
+          <div class="col-md-12 mt-4 d-flex justify-content-end">
+            <button cButton [disabled]="registerForm.invalid" variant="outline" type="submit" class="btn btn-primary px-4">
+              {{ selected_user > 0 ? 'Update User' : 'Create User' }}
+            </button>
+            <button cButton type="button" (click)="resetModal()" class="btn btn-secondary px-3 ms-2">Reset</button>
           </div>
 
         </form>
@@ -266,3 +269,4 @@
     </div>
   </div>
 </div>
+<!-- End Registration Form -->
