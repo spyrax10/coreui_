@@ -184,20 +184,122 @@
 
             </tr>
           </tbody>
+          <tfoot cTableColor="dark">
+            
+          </tfoot>
+
         </table>
-        <footer>
-          <div class="mt-2 d-flex justify-content-end">
-            <pagination-controls (pageChange)="page = $event" 
-              (responsive)="true"
-            >
-            </pagination-controls>
+
+        <c-row class="mt-2">
+          <div class="col-md-4">
+            <button cButton color="success" variant="outline" (click)="showModal('approver')">Approver's List</button>
           </div>
-        </footer>
+
+          <div class="col-md-8 d-flex justify-content-end">
+            <pagination-controls (pageChange)="page = $event" (responsive)="true"></pagination-controls>
+          </div>
+        </c-row>
+
       </div>
     </div>
   </div>
 </div>
 <!-- End User List -->
+
+<!-- User Approver -->
+<div class="modal" id="approverModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ApproverModalLabel">User Approver Assignment</h5>
+        <button type="button" class="btn-close" (click)="closeModal('approver')" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <c-row class="mb-2">
+          <div class="d-flex justify-content-end">
+            <div class="form-group">
+              <input type="text" class="form-control search-field" placeholder="Search Here..." [(ngModel)]="searchApprover">
+            </div>
+          </div>
+        </c-row>
+
+        <table bordered [hover]="true" [responsive]="true" [striped]="true"
+          align="middle" cTable class="mb-0 border">
+          <thead cTableColor="dark">
+            <tr>
+              <th>ID</th>
+              <th>Approver UserID</th>
+              <th>Fullname</th>
+              <th>Email</th>
+              <th>Level<th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let approver of approver_list | searchFilter: searchApprover; index as i">
+              <td>
+                <span>{{ approver[0] }}</span> 
+              </td>
+  
+              <td>
+                <span>{{ approver[1] }}</span> 
+              </td>
+
+              <td>
+                <span>{{ approver[2] }}</span> 
+              </td>
+
+              <td>
+                <span>{{ approver[3] }}</span> 
+              </td>
+              
+              <td>
+                <span>{{ approver[4] }}</span> 
+              </td>
+            </tr>
+          </tbody>
+
+          <tfoot cTableColor="dark">
+           ........
+          </tfoot>
+
+        </table>
+
+        <c-row class="mt-2"> 
+          <h6>Assign New Approver:</h6>
+        </c-row>
+
+        <c-row class="row g-3">
+          <div class="col-md-3">
+            <select class="form-control" cSelect id="id_approverLevel" id="id_approverLevel" >
+              <option *ngFor="let level of level_type; index as i" [value]="level.level_id">
+                {{ level.level_name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <select class="form-control" cSelect id="id_approverName" id="id_approverName" >
+              <option [value]="0">Select User:</option>
+              <option *ngFor="let user of user_list; index as i" [value]="user[0]">
+                {{ user[1] }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <button cButton id="btn_approver" color="info" variant="outline" class="mb-2" >Add New Approver</button>
+          </div>
+
+        </c-row>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End User Approver -->
 
 <!-- Registration Form -->
 <div class="modal" id="regModal">

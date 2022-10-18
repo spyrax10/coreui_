@@ -26,6 +26,10 @@ export class Users {
         return this.http.getAPI('Management') + '/sendEmailCPanel?';
     }
 
+    public api_get_approver() {
+        return this.http.getAPI('Approver') + '/getApprover?';
+    }
+
     public getCurrentUser(): any {
         return JSON.parse(localStorage.getItem('userData'));
     }

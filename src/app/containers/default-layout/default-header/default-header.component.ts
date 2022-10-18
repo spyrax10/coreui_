@@ -9,6 +9,7 @@ import { ApiHttpService } from 'src/app/_services/api-http.service';
 import Swal from 'sweetalert2';
 
 interface IRole {role_id: number; role_name: string;}
+interface ILevel {level_id: number; level_name: string;}
 
 @Component({
   selector: 'app-default-header',
@@ -17,11 +18,13 @@ interface IRole {role_id: number; role_name: string;}
 export class DefaultHeaderComponent extends HeaderComponent {
   @Input() sidebarId: string = "sidebar";
   searchText: string;
+  searchApprover: string;
   user_fullName = '';
   user_role: number = 0;
   user_name: string = '';
-  public selected_row: number = 1;
-  public user_list: any;
+  selected_row: number = 1;
+  user_list: any;
+  approver_list: any[];
   page: number = 1;
   selected_user: number = 0;
 
@@ -51,6 +54,21 @@ export class DefaultHeaderComponent extends HeaderComponent {
     },
     {
       role_id: 3, role_name :"Sales"
+    }
+  ]
+
+  public level_type: ILevel[] = [
+    {
+      level_id: 0, level_name :"Select Level:"
+    },
+    {
+      level_id: 1, level_name :"Level 1"
+    },
+    {
+      level_id: 2, level_name :"Level 2"
+    },
+    {
+      level_id: 3, level_name :"Level 3"
     }
   ]
 
@@ -93,6 +111,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
       this.fetchUsers();
       $("#userModal").toggle("slow");
     }
+    else if (type === 'approver') {
+      this.fetchApprovers();
+      $("#approverModal").toggle("slow");
+    }
   }
   public closeModal(type: string = "") {
 
@@ -101,6 +123,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
     }
     else if (type === 'user') {
       $("#userModal").hide("slow");
+    }
+    else if (type === 'approver') {
+      $("#approverModal").hide("slow");
     }
     this.resetModal(type);
   }
@@ -150,6 +175,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
       else {
         this.user_list = data;
       }
+    }, ((error: HttpErrorResponse) => {
+      this.swal.commonSwalCentered("Internal Server Error!", 'error');
+    }));
+  }
+
+  fetchApprovers() {
+    this.http.getData(this.user.api_get_approver(), "").subscribe(data => {
+      this.approver_list = data;
     }, ((error: HttpErrorResponse) => {
       this.swal.commonSwalCentered("Internal Server Error!", 'error');
     }));
