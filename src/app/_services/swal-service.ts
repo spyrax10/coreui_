@@ -82,4 +82,8 @@ export class SwalService {
             }
         });
     }
+
+    public closeSwal() {
+        Swal.close();
+    }
 }

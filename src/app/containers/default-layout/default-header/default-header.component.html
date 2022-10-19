@@ -177,7 +177,7 @@
               </td>
 
               <td *ngIf="user_name !== user[3]">
-                <button type="button" cButton color="danger" (click)="deleteUser(user[0])" variant="outline" size="sm">
+                <button type="button" cButton color="danger" (click)="deleteUser(user[0], 'user')" variant="outline" size="sm">
                   <svg cIcon name="cilTrash"></svg>
                 </button>
               </td>
@@ -229,7 +229,7 @@
           <thead cTableColor="dark">
             <tr>
               <th>ID</th>
-              <th>Approver UserID</th>
+              <th>UserID</th>
               <th>Fullname</th>
               <th>Email</th>
               <th>Level<th>
@@ -247,15 +247,20 @@
               </td>
 
               <td>
-                <span>{{ approver[2] }}</span> 
+                <span>{{ approver[3] }}</span> 
               </td>
 
               <td>
-                <span>{{ approver[3] }}</span> 
+                <span>{{ approver[2] }}</span> 
               </td>
               
               <td>
                 <span>{{ approver[4] }}</span> 
+              </td>
+              <td align="center">
+                <button type="button" cButton color="danger" (click)="deleteUser(approver[0], 'approver')" variant="outline" size="sm">
+                  <svg cIcon name="cilTrash"></svg>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -272,7 +277,7 @@
 
         <c-row class="row g-3">
           <div class="col-md-3">
-            <select class="form-control" cSelect id="id_approverLevel" id="id_approverLevel" >
+            <select class="form-control" cSelect id="id_approverLevel" (change)="onLevelChange($event)" >
               <option *ngFor="let level of level_type; index as i" [value]="level.level_id">
                 {{ level.level_name }}
               </option>
@@ -280,7 +285,7 @@
           </div>
 
           <div class="col-md-6">
-            <select class="form-control" cSelect id="id_approverName" id="id_approverName" >
+            <select class="form-control" cSelect id="id_approverName" (change)="onUserChange($event)" >
               <option [value]="0">Select User:</option>
               <option *ngFor="let user of user_list; index as i" [value]="user[0]">
                 {{ user[1] }}
@@ -289,7 +294,9 @@
           </div>
 
           <div class="col-md-3">
-            <button cButton id="btn_approver" color="info" variant="outline" class="mb-2" >Add New Approver</button>
+            <button cButton [disabled]="canAddApprover()" type="button" (click)="newApprover()" color="info" variant="outline" class="mb-2" >
+              Add New Approver
+            </button>
           </div>
 
         </c-row>

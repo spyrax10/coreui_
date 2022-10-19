@@ -30,6 +30,14 @@ export class Users {
         return this.http.getAPI('Approver') + '/getApprover?';
     }
 
+    public api_new_approver() {
+        return this.http.getAPI('Approver') + '/newApprover?';
+    }
+
+    public api_delete_approver() {
+        return this.http.getAPI('Approver') + '/delApprover?';
+    }
+
     public getCurrentUser(): any {
         return JSON.parse(localStorage.getItem('userData'));
     }

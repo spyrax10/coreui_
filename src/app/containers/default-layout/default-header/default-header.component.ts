@@ -27,7 +27,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
   approver_list: any[];
   page: number = 1;
   selected_user: number = 0;
-
+  selected_approver: number = 0;
+  approver_level: number = 0;
   registerForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     userLevel: ['1', [Validators.required]],
@@ -140,6 +141,12 @@ export class DefaultHeaderComponent extends HeaderComponent {
     else if (type === 'user') {
       this.searchText = "";
     }
+    else if (type === 'approver') {
+      $('#id_approverName').val("0");
+      $('#id_approverLevel').val("0");
+      this.selected_approver = 0;
+      this.approver_level = 0;
+    }
   }
   onRoleChange($event: any) : void {
     if (this.selected_user === 0) {
@@ -151,8 +158,20 @@ export class DefaultHeaderComponent extends HeaderComponent {
     });
   }
 
+  onUserChange($event: any) : void {
+    this.selected_approver = $event.target.value;
+  }
+
+  onLevelChange($event: any) : void {
+    this.approver_level = $event.target.value;
+  }
+
   onValidate() {
     return this.registerForm.status === 'VALID';
+  }
+
+  canAddApprover() {
+    return this.selected_approver > 0 && this.approver_level > 0 ? false : true;
   }
 
   fetchUsers(userID: any = "") {
@@ -188,8 +207,25 @@ export class DefaultHeaderComponent extends HeaderComponent {
     }));
   }
 
-  deleteUser(value: any) {
+  newApprover() {
+    let params = new HttpParams()
+    .set('user_id', this.selected_approver)
+    .set('level', this.approver_level);
+
+    this.swal.swalLoading("Adding New Approver... Please Wait...");
+    this.http.getData(this.user.api_new_approver(), params).subscribe(result => {
+      this.swal.closeSwal();
+      this.fetchApprovers();
+      this.resetModal('approver');
+      this.swal.commonSwalCentered("New Approver Addedd...", 'success');
+    }, ((error: HttpErrorResponse) => {
+      this.swal.commonSwalCentered(error.error, 'error');
+    }));
+  }
+
+  deleteUser(value: any, type: any = "user") {
     let params = new HttpParams().set('userID', value);
+    let delete_link = type === "user" ? this.user.api_delete_user() : this.user.api_delete_approver();
 
     Swal.fire({
       title: "Delete Confirmation",
@@ -203,10 +239,23 @@ export class DefaultHeaderComponent extends HeaderComponent {
     }).then((response) => {
       if (response.isConfirmed) {
 
-        this.swal.swalLoading("Deleting User... Please Wait...");
-        this.http.getData(this.user.api_delete_user(), params).subscribe(result => {
-          this.swal.commonSwalCentered("User Sucessfully Deleted...", 'success');
-          this.fetchUsers();
+        this.swal.swalLoading(type === "user" ? 
+          "Deleting User... Please Wait..." : 
+          "Deleting Approver... Please Wait..."
+        );
+
+        this.http.getData(delete_link, params).subscribe(result => {
+          this.swal.commonSwalCentered(type === "user" ? 
+            "User Sucessfully Deleted..." : 
+            "Approver Sucessfully Deleted...", 'success'
+          );
+
+          if (type === "user") {
+            this.fetchUsers();
+          }
+          else {
+            this.fetchApprovers();
+          }   
         }, ((error: HttpErrorResponse) => {
           this.swal.commonSwalCentered(error.message, 'error');
         }));
@@ -264,11 +313,6 @@ export class DefaultHeaderComponent extends HeaderComponent {
           this.swal.commonSwalCentered(error.error, 'error');  
         }
       }));
-    }
-    else {
-      const data = this.registerForm.value;
-      console.log(data);
-      this.swal.commonSwalCentered("Incomplete Details...", 'error');  
     }
   }
 
