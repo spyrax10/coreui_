@@ -2,58 +2,35 @@ import { INavData } from '@coreui/angular';
 
 export const navItems: INavData[] = [
 
-  {
-    name: 'Dashboard',
-    url: '/dashboard',
-    iconComponent: { name: 'cil-align-left' }
-  },
-  {
-    title: true,
-    name: 'Transaction Menu'
-  },
-  {
-    name: 'Sales',
-    url: '/sales',
-    iconComponent: { name: 'cil-chart-line' },
+  { name: 'Dashboard', url: '/dashboard', iconComponent: { name: 'cil-align-left' } },
+  { title: true, name: 'Transaction Menu' },
+
+  { name: 'Sales', url: '/sales', iconComponent: { name: 'cil-chart-line' },
     children : [
-      {
-        name: 'Sales Dashboard',
-        url: 'sales/sales_dashboard'
-      },
-      {
-        name: 'Daily Sales Per Branch',
-        url: 'sales/sales_branch'
-      }
-    ]
+      { name: 'Sales Dashboard', url: 'sales/sales_dashboard' },
+      { name: 'Daily Sales Per Branch', url: 'sales/sales_branch' }
+    ],
+    role: 'Sales'
   },
-  {
-    name: 'Purchases',
-    url: '/purchases',
-    iconComponent: { name: 'cil-basket' },
+  { name: 'Purchases', url: '/purchases', iconComponent: { name: 'cil-basket' },
     children : [
-      {
-        name: 'Purchases Dashboard',
-        url: 'purchases/purch_dashboard'
-      }
-    ]
+      { name: 'Purchases Dashboard', url: 'purchases/purch_dashboard'}
+    ],
+    role: 'Purchases'
   },
-  {
-    name: 'Inventory',
-    url: '/inventory',
-    iconComponent: { name: 'cil-chart' },
+  { name: 'Inventory', url: '/inventory', iconComponent: { name: 'cil-chart' },
     children : [
-      {
-        name: 'Inventory Dashboard',
-        url: 'inventory/invty_dashboard'
-      }
-    ]
+      { name: 'Inventory Dashboard', url: 'inventory/invty_dashboard'}
+    ],
+    role: 'Inventory'
+    //attributes: { hidden: canUseModule("Inventory") }
   },
 
-  // //Reports Section
-  {
-    title: true,
-    name: 'Reports'
-  },
+  //Reports Section
+  // {
+  //   title: true,
+  //   name: 'Reports'
+  // },
   // {
   //   name: 'Sales',
   //   url: '/sales/reports',

@@ -59,6 +59,10 @@ export class Users {
         return this.getCurrentUser().securityLevel;
     }
 
+    public getRoleAccess(): string {
+        return this.getCurrentUser().roleAccess;
+    }
+
     public getUserToken(): string {
         return this.getCurrentUser().lastRowHash;
     }
@@ -71,4 +75,21 @@ export class Users {
         const data = this.getCurrentUser();
         return data.lastName + ", " + data.firstName + " " + data.middleInitial;
     }
+
+    public canAccessModule(mod_name: string = "") {
+        if (mod_name === "") {
+          return true;
+        }
+        if (this.getRoleAccess() === "all") {
+          return true;
+        }
+        else {
+          if (this.getRoleAccess().split(',').indexOf(mod_name.toLowerCase()) === 0) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        }
+      }
 }
