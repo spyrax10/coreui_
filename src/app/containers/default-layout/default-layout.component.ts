@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Users } from 'src/app/_services/user.service';
-
 import { navItems } from './_nav';
 
 @Component({
@@ -16,18 +14,6 @@ export class DefaultLayoutComponent {
     suppressScrollX: true,
   };
 
-
-  public canUseModule(mod_name: any): any {
-    return this.user.canAccessModule(mod_name);
-  }
-  
-  constructor(private user: Users) {
-    this.role_access = this.user.getRoleAccess();
-    // this.navItem.forEach((value, index) => {
-    //   if (!this.user.canAccessModule(value.role)) {
-    //     this.navItem.splice(index, 1 + 1);
-    //     console.log(value.role + " || " + index + " || " + this.user.canAccessModule(value.role));
-    //   }
-    // });
+  constructor() {
   }
 }

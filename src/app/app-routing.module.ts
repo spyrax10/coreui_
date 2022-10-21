@@ -9,6 +9,7 @@ import { RegisterComponent } from './views/pages/register/register.component';
 import { ForgotComponent } from './views/pages/forgot/forgot.component';
 
 import { AuthGuard } from './_guards/auth.guard';
+import { NavGuard } from './_guards/mod_guard';
 
 const routes: Routes = [
 
@@ -30,17 +31,23 @@ const routes: Routes = [
       //Transaction Modules
       {
         path: 'sales',
+        canActivate: [NavGuard],
+        data: {mod_name: 'sales'},
         loadChildren: () =>
           import('./views/sales/sales.module').then((m) => m.SalesModule
         )
       },
       {
         path: 'purchases',
+        canActivate: [NavGuard],
+        data: {mod_name: 'purchases'},
         loadChildren: () =>
           import('./views/purchases/purchases.module').then((m) => m.PurchasesModule)
       },
       {
         path: 'inventory',
+        canActivate: [NavGuard],
+        data: {mod_name: 'inventory'},
         loadChildren: () =>
           import('./views/inventory/inventory.module').then((m) => m.InventoryModule)
       },

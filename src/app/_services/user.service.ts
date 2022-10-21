@@ -77,19 +77,19 @@ export class Users {
     }
 
     public canAccessModule(mod_name: string = "") {
-        if (mod_name === "") {
-          return true;
-        }
+        let status: boolean = true;
+
         if (this.getRoleAccess() === "all") {
-          return true;
+          status = true;
         }
         else {
-          if (this.getRoleAccess().split(',').indexOf(mod_name.toLowerCase()) === 0) {
-            return true;
-          }
-          else {
-            return false;
-          }
+            if (this.getRoleAccess().split(',').indexOf(mod_name.toLowerCase()) === 0) {
+                status = true;
+            }
+            else {
+                status = false;
+            }
         }
-      }
+        return status;
+    }
 }
