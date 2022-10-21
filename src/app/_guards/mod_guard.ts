@@ -13,7 +13,7 @@ export class NavGuard implements CanActivate {
         if (this.user.canAccessModule(mod_name)) {
             return true;
         }
-        this.router.navigate(['/404']);
+        this.router.navigate(['/401']);
         return false;
     }
 }

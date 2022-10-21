@@ -5,6 +5,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotComponent } from './forgot/forgot.component';
+import { Page401Component } from './page401/page401.component';
 import { Page404Component } from './page404/page404.component';
 import { Page500Component } from './page500/page500.component';
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular';
@@ -18,6 +19,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
     LoginComponent,
     RegisterComponent,
     ForgotComponent,
+    Page401Component,
     Page404Component,
     Page500Component
   ],
