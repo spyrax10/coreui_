@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { ErrorInterceptor } from '../app/_services/error_interceptor';
 
 import {
   PERFECT_SCROLLBAR_CONFIG,
@@ -128,7 +129,9 @@ export function tokenGetter() {
         siteKey: environment.siteKey
       }
     },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
     IconSetService,
     Title
   ],

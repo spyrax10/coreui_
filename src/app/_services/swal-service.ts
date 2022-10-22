@@ -60,8 +60,7 @@ export class SwalService {
                     localStorage.removeItem('userData');
                     this.authService.logout({returnTo: window.location.origin});
                 }
-               
-                if (callback !== undefined) {
+                else {
                     callback();
                 }
             }
