@@ -293,25 +293,14 @@ export class DefaultHeaderComponent extends HeaderComponent {
       );
 
       this.http.getData(this.user.api_new_user(), params).subscribe(result => {
+        this.swal.commonSwalCentered(
+          this.selected_user > 0 ? 'User Updated' : 'New User Registered...', 
+          'success'
+        ); 
+        this.fetchUsers(); 
+        this.closeModal('reg');
       }, ((error: HttpErrorResponse) => {
-        if (error.status === 200) {
-          // this.http.getData(this.user.api_send_email(), email_params).subscribe(emailRes => {
-          // }, (error2: HttpErrorResponse) => {
-          //   if (error2.status != 200) {
-          //     this.swal.commonSwalCentered("Email Notification has been Rejected...", 'error');  
-          //   }
-          // });
-          
-          this.swal.commonSwalCentered(
-            this.selected_user > 0 ? 'User Updated' : 'New User Registered...', 
-            'success'
-          ); 
-          this.fetchUsers(); 
-          this.closeModal('reg');
-        }
-        else {
-          this.swal.commonSwalCentered(error.error, 'error');  
-        }
+        this.swal.commonSwalCentered(error.error, 'error');  
       }));
     }
   }

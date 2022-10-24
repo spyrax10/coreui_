@@ -370,7 +370,7 @@
             <button cButton [disabled]="registerForm.invalid" variant="outline" type="submit" class="btn btn-primary px-4">
               {{ selected_user > 0 ? 'Update User' : 'Create User' }}
             </button>
-            <button cButton type="button" (click)="resetModal()" class="btn btn-secondary px-3 ms-2">Reset</button>
+            <button cButton type="button" (click)="resetModal('reg')" class="btn btn-secondary px-3 ms-2">Reset</button>
           </div>
 
         </form>
