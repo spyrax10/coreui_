@@ -18,6 +18,15 @@ constructor( private http: HttpClient, public swalService: SwalService ) {}
             params: params
         });
     }
+
+    public deleteData(api: any = '', params: any) {
+        return this.http.delete<any>(api, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("aToken")
+            },
+            params: params
+        });
+    }
     
     public getAPI(module: string = '') {
         return Constants.API_ENDPOINT + "api/" + module;

@@ -244,7 +244,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
           "Deleting Approver... Please Wait..."
         );
 
-        this.http.getData(delete_link, params).subscribe(result => {
+        this.http.deleteData(delete_link, params).subscribe(result => {
           this.swal.commonSwalCentered(type === "user" ? 
             "User Sucessfully Deleted..." : 
             "Approver Sucessfully Deleted...", 'success'
