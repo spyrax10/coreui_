@@ -83,13 +83,14 @@ export class Users {
           status = true;
         }
         else {
-            if (this.getRoleAccess().split(',').indexOf(mod_name.toLowerCase()) === 0) {
+            if (this.getRoleAccess().split(',').indexOf(mod_name.toLowerCase()) > -1) {
                 status = true;
             }
             else {
                 status = false;
             }
         }
+        console.log(this.getRoleAccess().split(',').indexOf(mod_name.toLowerCase()));
         return status;
     }
 }
