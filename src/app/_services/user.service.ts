@@ -90,7 +90,6 @@ export class Users {
                 status = false;
             }
         }
-        console.log(this.getRoleAccess().split(',').indexOf(mod_name.toLowerCase()));
         return status;
     }
 }
